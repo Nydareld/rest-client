@@ -1,0 +1,38 @@
+<!-- Wrapper-->
+<div id="wrapper">
+
+    <!-- Navigation -->
+        <left-side-menu logo="rootCtrl.logo" user="rootCtrl.user"></left-side-menu>
+
+    <!-- Page wraper -->
+    <!-- ng-class with current state name give you the ability to extended customization your view -->
+    <div id="page-wrapper" class="gray-bg {{$state.current.name}}">
+
+        <!-- Page wrapper -->
+        <!-- <div ng-include="'modules/common/topnavbar.html'"></div> -->
+        <top-nav-bar search-place-holder="Rechercher"></top-nav-bar>
+
+        <breadcrumbs
+                    home-state-name="rest-client.index"
+                    home-state-text="rest client">
+        </breadcrumbs>
+
+        <!-- Main view  -->
+        <div ui-view></div>
+
+        <!-- Footer -->
+        <footer
+            footer-left="<strong>Copyright</strong> Example Company &copy; 2015-2017"
+            footer-right="10GB of <strong>250GB</strong> Free."
+
+            ></footer>
+        <!-- <div ng-include="'modules/common/footer.html'"></div> -->
+
+    </div>
+    <!-- End page wrapper-->
+
+    <!-- Right Sidebar -->
+    <!-- <div ng-include="'modules/common/right_sidebar.html'"></div> -->
+
+</div>
+<!-- End wrapper-->

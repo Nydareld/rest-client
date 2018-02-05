@@ -1,0 +1,51 @@
+{
+  "type": "script",
+  "seleniumVersion": "2",
+  "formatVersion": 2,
+  "steps": [
+    {
+      "type": "get",
+      "url": "http://ns358459.ip-91-121-133.eu/pl-front/"
+    },
+    {
+      "type": "setElementText",
+      "locator": {
+        "type": "id",
+        "value": "username"
+      },
+      "text": "fidusercentre"
+    },
+    {
+      "type": "setElementText",
+      "locator": {
+        "type": "name",
+        "value": "password"
+      },
+      "text": "fidusercentre"
+    },
+    {
+      "type": "submitElement",
+      "locator": {
+        "type": "name",
+        "value": "login"
+      }
+    },
+    {
+      "type": "clickElement",
+      "locator": {
+        "type": "link text",
+        "value": "Accueil"
+      }
+    },
+    {
+      "type": "verifyTextPresent",
+      "text": "Céline Piet"
+    }
+  ],
+  "data": {
+    "configs": {},
+    "source": "none"
+  },
+  "inputs": [],
+  "timeoutSeconds": 60
+}

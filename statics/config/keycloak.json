@@ -1,0 +1,7 @@
+{
+    "realm": "master",
+    "auth-server-url": "http://plv2-qual.nrco.fr/auth",
+    "ssl-required": "external",
+    "resource": "rest-client",
+    "public-client": true
+}

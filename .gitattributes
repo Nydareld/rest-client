@@ -1,0 +1,16 @@
+*.less text
+* text eol=lf
+
+*.png  binary
+*.jpg  binary
+
+*.p12  binary
+
+buildprod/* binary
+lib/* binary
+
+*.otf binary
+*.eot binary
+*.ttf binary
+*.woff binary
+*.woff2 binary

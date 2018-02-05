@@ -1,0 +1,24 @@
+{
+    "esnext": true,
+    "globals": {
+        "module": true,
+        "require": true,
+        "describe": true,
+        "it": true,
+        "before" : true,
+        "beforeall" : true,
+        "after" : true,
+        "afterall" : true,
+        "Buffer" : true,
+        "console" : true,
+        "Date" : true,
+        "process" : true,
+        "defore" : true,
+        "__filename" : true,
+        "global" : true,
+        "angular" : true,
+        "window" : true
+    },
+    "undef": true,
+    "unused": true
+}

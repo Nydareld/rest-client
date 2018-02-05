@@ -1,0 +1,25 @@
+{
+    "type": "interpreter-config",
+    "configurations": [
+        {
+            "settings": [
+                {
+                    "driverOptions": {
+                        "host": "hub.browserstack.com",
+                        "port": 80
+                    },
+                    "browserOptions": {
+                        "browserName": "chrome",
+                        "os": "Windows",
+                        "browserstack.user": "",
+                        "browserstack.key": "",
+                        "browserstack.debug" : "true"
+                    }
+                }
+            ],
+            "scripts": [
+                "testScripts/*"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,136 @@
+{
+    "type": "interpreter-config",
+    "configurations": [
+        {
+            "settings": [
+                {
+                    "driverOptions": {
+                        "host": "hub.browserstack.com",
+                        "port": 80
+                    },
+                    "browserOptions": {
+                        "browserName": "ie",
+                        "os": "Windows",
+                        "browserVersion": "9",
+                        "browserstack.user": "",
+                        "browserstack.key": "",
+                        "browserstack.debug" : "true"
+                    }
+                },
+                {
+                    "driverOptions": {
+                        "host": "hub.browserstack.com",
+                        "port": 80
+                    },
+                    "browserOptions": {
+                        "browserName": "ie",
+                        "os": "Windows",
+                        "browserVersion": "10",
+                        "browserstack.user": "",
+                        "browserstack.key": "",
+                        "browserstack.debug" : "true"
+                    }
+                },
+                {
+                    "driverOptions": {
+                        "host": "hub.browserstack.com",
+                        "port": 80
+                    },
+                    "browserOptions": {
+                        "browserName": "ie",
+                        "os": "Windows",
+                        "browserVersion": "11",
+                        "browserstack.user": "",
+                        "browserstack.key": "",
+                        "browserstack.debug" : "true"
+                    }
+                },
+                {
+                    "driverOptions": {
+                        "host": "hub.browserstack.com",
+                        "port": 80
+                    },
+                    "browserOptions": {
+                        "browserName": "edge",
+                        "os": "Windows",
+                        "browserVersion": "15",
+                        "browserstack.user": "",
+                        "browserstack.key": "",
+                        "browserstack.debug" : "true"
+                    }
+                },
+                {
+                    "driverOptions": {
+                        "host": "hub.browserstack.com",
+                        "port": 80
+                    },
+                    "browserOptions": {
+                        "browserName": "safari",
+                        "os": "OS X",
+                        "browserVersion": "8",
+                        "browserstack.user": "",
+                        "browserstack.key": "",
+                        "browserstack.debug" : "true"
+                    }
+                },
+                {
+                    "driverOptions": {
+                        "host": "hub.browserstack.com",
+                        "port": 80
+                    },
+                    "browserOptions": {
+                        "browserName": "firefox",
+                        "os": "Windows",
+                        "browserstack.user": "",
+                        "browserstack.key": "",
+                        "browserstack.debug" : "true"
+                    }
+                },
+                {
+                    "driverOptions": {
+                        "host": "hub.browserstack.com",
+                        "port": 80
+                    },
+                    "browserOptions": {
+                        "browserName": "firefox",
+                        "os": "Windows",
+                        "browserVersion": "47",
+                        "browserstack.user": "",
+                        "browserstack.key": "",
+                        "browserstack.debug" : "true"
+                    }
+                },
+                {
+                    "driverOptions": {
+                        "host": "hub.browserstack.com",
+                        "port": 80
+                    },
+                    "browserOptions": {
+                        "browserName": "chrome",
+                        "os": "Windows",
+                        "browserstack.user": "",
+                        "browserstack.key": "",
+                        "browserstack.debug" : "true"
+                    }
+                },
+                {
+                    "driverOptions": {
+                        "host": "hub.browserstack.com",
+                        "port": 80
+                    },
+                    "browserOptions": {
+                        "browserName": "chrome",
+                        "os": "Windows",
+                        "browserVersion": "51",
+                        "browserstack.user": "",
+                        "browserstack.key": "",
+                        "browserstack.debug" : "true"
+                    }
+                }
+            ],
+            "scripts": [
+                "testScripts/*"
+            ]
+        }
+    ]
+}

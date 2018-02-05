@@ -1,0 +1,18 @@
+{
+    "type": "interpreter-config",
+    "configurations": [
+        {
+            "settings": [
+                {
+                    "browserOptions": {
+                        "browserName": "chrome",
+                        "os": "Windows"
+                    }
+                }
+            ],
+            "scripts": [
+                "testScripts/*"
+            ]
+        }
+    ]
+}
