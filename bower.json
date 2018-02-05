@@ -4,7 +4,7 @@
     "angular": "^1.6.4",
     "bootstrap": "^3.3.7",
     "jquery": "^3.1.1",
-    "nrcom-inspinia": "https://17d96bb98ebe10942ba216f40f473f9df64887c9:x-oauth-basic@github.com/NRCommunication/nrcom-inspinia.git",
+    "nrcom-inspinia": "git+ssh://git@github.com/NRCommunication/nrcom-inspinia.git",
     "normalize-css": "^6.0.0",
     "jquery-ui": "^1.12.1",
     "angular-ui-router": "^1.0.0",
