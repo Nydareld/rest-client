@@ -6,7 +6,8 @@ angular.module("rest-client", [
     "ui.bootstrap",                 // Ui Bootstrap
     "ngSanitize",                   // Sanitize
     "pascalprecht.translate",       // Translate
-    "nrcomInspinia"                 // Theme custom insmina
+    "nrcomInspinia",                 // Theme custom insmina
+    "ui.ace"
 ]);
 
 var modulesToRun = [

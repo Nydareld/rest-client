@@ -6,6 +6,7 @@ module.exports = function(grunt) {
         "bower_components/jquery-ui/jquery-ui.js",
         "bower_components/Flot/jquery.flot.js",
         "bower_components/bootstrap/dist/js/bootstrap.js",
+        "bower_components/ace-builds/src-min-noconflict/ace.js",
         "bower_components/angular/angular.js",
         "bower_components/angular-sanitize/angular-sanitize.js",
         "bower_components/rangy/rangy-core.min.js",
@@ -36,6 +37,7 @@ module.exports = function(grunt) {
         "bower_components/ng-material-floating-button/src/mfb-directive.js",
         "bower_components/angular-i18n/angular-locale_fr-fr.js",
         "bower_components/ejs/ejs.js",
+        "bower_components/angular-ui-ace/ui-ace.js",
         "bower_components/nrcom-inspinia/dist/scripts/app.js",
         "bower_components/nrcom-inspinia/dist/scripts/app.templates.js"
     ];
