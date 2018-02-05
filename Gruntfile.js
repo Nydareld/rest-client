@@ -1,26 +1,48 @@
 module.exports = function(grunt) {
 
     var bowerJs = [
+        "lib/swing.js",
         "bower_components/jquery/dist/jquery.js",
         "bower_components/jquery-ui/jquery-ui.js",
+        "bower_components/Flot/jquery.flot.js",
         "bower_components/bootstrap/dist/js/bootstrap.js",
         "bower_components/angular/angular.js",
         "bower_components/angular-sanitize/angular-sanitize.js",
+        "bower_components/rangy/rangy-core.min.js",
+        "bower_components/rangy/rangy-classapplier.min.js",
+        "bower_components/rangy/rangy-selectionsaverestore.min.js",
+        "bower_components/rangy/rangy-highlighter.min.js",
+        "bower_components/rangy/rangy-serializer.min.js",
+        "bower_components/rangy/rangy-textrange.min.js",
         "bower_components/angular-translate/angular-translate.js",
         "bower_components/angular-ui-router/release/angular-ui-router.js",
         "bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
         "bower_components/angular-translate/angular-translate.js",
         "bower_components/oclazyload/dist/ocLazyLoad.js",
         "bower_components/metisMenu/dist/metisMenu.js",
+        "bower_components/moment/min/moment.min.js",
+        "bower_components/nouislider/distribute/nouislider.min.js",//à retirer?
+        "bower_components/angularjs-slider/dist/rzslider.min.js",
         "bower_components/AngularJS-Toaster/toaster.js",
         "bower_components/angular-animate/angular-animate.js",
+        "bower_components/angular-loading-bar/build/loading-bar.js",
         "bower_components/keycloak/dist/keycloak.js",
+        "bower_components/plupload/js/plupload.full.min.js",
+        "bower_components/angular-plupload/dist/angular-plupload.min.js",
+        "bower_components/angular-ui-select/dist/select.min.js",
+        "bower_components/textAngular/dist/textAngular.min.js",
+        "bower_components/textAngular/dist/textAngular-rangy.min.js",
+        "bower_components/textAngular/dist/textAngular-sanitize.min.js",
+        "bower_components/ng-material-floating-button/src/mfb-directive.js",
+        "bower_components/angular-i18n/angular-locale_fr-fr.js",
+        "bower_components/ejs/ejs.js",
         "bower_components/nrcom-inspinia/dist/scripts/app.js",
-        "bower_components/nrcom-inspinia/dist/scripts/app.templates.js",
+        "bower_components/nrcom-inspinia/dist/scripts/app.templates.js"
     ];
 
     var bowerFonts = [
-        "bower_components/font-awesome/fonts/**"
+        "bower_components/font-awesome/fonts/**",
+        "bower_components/bootstrap/fonts/**"
     ];
 
     var bowerCss = [
@@ -29,8 +51,12 @@ module.exports = function(grunt) {
         "bower_components/metisMenu/dist/metisMenu.css",
         "bower_components/animate.css/animate.css",
         "bower_components/AngularJS-Toaster/toaster.css",
-        "bower_components/nrcom-inspinia/dist/style/style.css",
-        "bower_components/font-awesome/css/font-awesome.css"
+        "bower_components/angular-loading-bar/build/loading-bar.css",
+        "bower_components/angular-ui-select/dist/select.min.css",
+        "bower_components/nrcom-inspinia/dist/style/style.css", // Commenté pour overide le style
+        "bower_components/font-awesome/css/font-awesome.css",
+        "bower_components/textAngular/dist/textAngular.css",
+        "bower_components/ng-material-floating-button/mfb/dist/mfb.css"
     ];
 
     grunt.initConfig({
@@ -101,7 +127,7 @@ module.exports = function(grunt) {
             }
         },
         ngtemplates: {
-            rest-client : {
+            "rest-client" : {
                 cwd : "src",
                 src: [
                     "./**/*.html",
@@ -148,7 +174,7 @@ module.exports = function(grunt) {
                 ],
                 tasks: ["concat:js", "copy:main", "less:dev","ngtemplates:rest-client"],
                 options: {
-                    livereload: true,
+                    livereload: 13337,
                 }
             },
             bower : {
@@ -158,7 +184,7 @@ module.exports = function(grunt) {
                 ],
                 tasks: ["concat:concatBowerJs", "concat:concatBowerCss","copy:main"],
                 options: {
-                    livereload: true,
+                    livereload: 13337,
                 }
             }
         },
@@ -182,7 +208,7 @@ module.exports = function(grunt) {
                     port:3000,
                     hostname:"localhost",
                     bases:["./public"],
-                    livereload:true
+                    livereload:13337
                 }
             }
         }
