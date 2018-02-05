@@ -1,0 +1,74 @@
+
+table.dataTable thead {
+    .sorting,
+    .sorting_asc:after,
+    .sorting_desc,
+    .sorting_asc_disabled,
+    .sorting_desc_disabled {
+        background: transparent;
+    }
+}
+
+
+.dataTables_length{
+
+    float: left;
+
+    @media (max-width: 768px) {
+        float: none;
+    }
+
+    label {
+        font-weight: normal;
+    }
+    select{
+        width: 75px;
+        display: inline-block;
+    }
+}
+
+.dataTables_wrapper {
+    .dataTables_filter {
+        text-align: right;
+        label {
+            font-weight: normal;
+            white-space: nowrap;
+            text-align: left;
+            margin-right: 5px;
+        }
+    }
+    padding-bottom: 30px;
+}
+
+.html5buttons {
+
+    float: right;
+
+    a {
+        border: 1px solid @html5buttons-border;
+        background: @html5buttons-bg;
+        color: @html5buttons-color;
+        box-shadow: none;
+        padding: 6px 8px;
+        font-size: 12px;
+
+        &:hover, &:focus:active {
+            background-color: @html5buttons-hover-bg;
+            color: inherit;
+            border-color: @html5buttons-hover-color;
+
+        }
+    }
+
+
+    @media (max-width: 768px) {
+        .html5buttons {
+            float: none;
+            margin-top: 10px;
+        }
+    }
+}
+
+div.dt-button-info {
+    z-index: 100;
+}

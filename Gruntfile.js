@@ -53,7 +53,7 @@ module.exports = function(grunt) {
         "bower_components/AngularJS-Toaster/toaster.css",
         "bower_components/angular-loading-bar/build/loading-bar.css",
         "bower_components/angular-ui-select/dist/select.min.css",
-        "bower_components/nrcom-inspinia/dist/style/style.css", // Commenté pour overide le style
+        // "bower_components/nrcom-inspinia/dist/style/style.css", // Commenté pour overide le style
         "bower_components/font-awesome/css/font-awesome.css",
         "bower_components/textAngular/dist/textAngular.css",
         "bower_components/ng-material-floating-button/mfb/dist/mfb.css"

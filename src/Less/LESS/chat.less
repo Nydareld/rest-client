@@ -1,0 +1,125 @@
+#small-chat {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+#small-chat .badge {
+  position: absolute;
+  top: -3px;
+  right: -4px;
+}
+
+.open-small-chat {
+  height: 38px;
+  width: 38px;
+  display: block;
+  background: @theme-main-color;
+  padding: 9px 8px;
+  text-align: center;
+  color: @open-small-chat-color;
+  border-radius: 50%;
+}
+
+.open-small-chat:hover {
+  color: @theme-main-color;
+  background: @theme-main-color-hover;
+}
+
+.small-chat-box {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 75px;
+  background: @small-chat-box-bg;
+  border: 1px solid @border-color;
+  width: 230px;
+  height: 320px;
+  border-radius: 4px;
+}
+
+.small-chat-box.ng-small-chat {
+  display: block;
+}
+
+.body-small {
+  .small-chat-box {
+    bottom: 70px;
+    right: 20px;
+  }
+}
+
+.small-chat-box.active {
+  display: block;
+}
+
+.small-chat-box {
+
+  .heading {
+    background: @nav-bg;
+    padding: 8px 15px;
+    font-weight: bold;
+    color: @small-chat-box-heading-color;
+  }
+
+  .chat-date {
+    opacity: 0.6;
+    font-size: 10px;
+    font-weight: normal;
+  }
+
+  .content {
+    padding: 15px 15px;
+
+    .author-name {
+      font-weight: bold;
+      margin-bottom: 3px;
+      font-size: 11px;
+    }
+
+    > div {
+      padding-bottom: 20px;
+    }
+
+    .chat-message {
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      line-height: 14px;
+      max-width: 80%;
+      background: @chat-message-bg;
+      margin-bottom: 10px;
+    }
+
+    .chat-message.active {
+      background: @theme-main-color;
+      color: @chat-message-active-color;
+    }
+
+    .left {
+      text-align: left;
+      clear: both;
+
+      .chat-message {
+        float: left;
+      }
+    }
+
+    .right {
+      text-align: right;
+      clear: both;
+
+      .chat-message {
+        float: right;
+      }
+
+    }
+
+  }
+
+  .form-chat {
+    padding: 10px 10px;
+  }
+
+}
