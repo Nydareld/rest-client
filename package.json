@@ -7,7 +7,7 @@
     "lint": "prettier --write src/**/*.js",
     "precommit": "pretty-quick --staged",
     "prepush":
-      "grunt prod && git add dist && git commit -m 'auto build :dog:' --no-verify && git push origin $(git rev-parse --abbrev-ref HEAD) --no-verify && exit 1 ; exit 0 "
+      "grunt prod && git add buildProd && git commit -m 'auto build :dog:' --no-verify && git push origin $(git rev-parse --abbrev-ref HEAD) --no-verify && exit 1 ; exit 0 "
   },
   "repository": {
     "type": "git",
