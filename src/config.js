@@ -35,3 +35,11 @@ angular
         // Lancement de la machien a etat
         $rootScope.$state = $state;
     });
+
+var keycloakJson = {
+    realm: "master",
+    url: "http://plv2-qual.nrco.fr/auth",
+    clientId: "pl-backoffice",
+    "ssl-required": "external",
+    "public-client": true
+};
