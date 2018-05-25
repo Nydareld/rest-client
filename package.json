@@ -1,6 +1,7 @@
 {
   "name": "rest-client",
   "main": "src/app.js",
+  "license" : "beerware",
   "private": false,
   "scripts": {
     "test": "bash tests/test.sh",
