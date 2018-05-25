@@ -1,9 +1,17 @@
 {
   "name": "rest-client",
   "main": "src/app.js",
-  "private": true,
+  "private": false,
   "scripts": {
-    "test": "node_modules/mocha/bin/mocha testAppLayout.js"
+    "test": "bash tests/test.sh",
+    "lint": "prettier --write src/**/*.js",
+    "precommit": "pretty-quick --staged",
+    "prepush":
+      "grunt prod && git add dist && git commit -m 'auto build :dog:' --no-verify && git push origin $(git rev-parse --abbrev-ref HEAD) --no-verify && exit 1 ; exit 0 "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Nydareld/rest-client.git"
   },
   "devDependencies": {
     "bower": "^1.8.0",
@@ -21,6 +29,9 @@
     "less-plugin-autoprefix": "^1.5.1",
     "less-plugin-clean-css": "^1.5.1",
     "mocha": "^3.3.0",
-    "selenium-webdriver": "^3.4.0"
+    "selenium-webdriver": "^3.4.0",
+    "husky": "^0.14.3",
+    "prettier": "1.12.1",
+    "pretty-quick": "^1.6.0"
   }
 }
