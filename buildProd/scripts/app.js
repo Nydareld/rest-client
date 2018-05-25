@@ -50,6 +50,14 @@ angular
         $rootScope.$state = $state;
     });
 
+var keycloakJson = {
+    realm: "master",
+    url: "http://plv2-qual.nrco.fr/auth",
+    clientId: "pl-backoffice",
+    "ssl-required": "external",
+    "public-client": true
+};
+
 angular.module("rest-client").constant("globals", {
     api: {
         baseUrl: "http://localhost/api/v1"
