@@ -130,6 +130,11 @@ angular.module('rest-client').run(['$templateCache', function($templateCache) {
   );
 
 
+  $templateCache.put('./modules/reports/index.html',
+    "aa\n"
+  );
+
+
   $templateCache.put('./modules/rest/rest.html',
     "<div class=\"wrapper wrapper-content\">\n" +
     "    <div class=\"ibox\">\n" +

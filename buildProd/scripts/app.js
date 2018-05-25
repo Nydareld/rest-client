@@ -18,6 +18,15 @@ var modulesToRun = ["rest-client"];
  *      - Mode html5 des url
  *      - Etat root
  */
+
+var keycloakJson = {
+    realm: "master",
+    url: "http://plv2-qual.nrco.fr/auth",
+    clientId: "error-manager",
+    "ssl-required": "external",
+    "public-client": true
+};
+
 angular
     .module("rest-client")
     .config([
@@ -200,6 +209,28 @@ angular.module("rest-client").controller("logsController", [
         };
     }
 ]);
+
+angular.module("rest-client").config([
+    "$stateProvider",
+    "$urlRouterProvider",
+    "menuProvider",
+    function($stateProvider, $urlRouterProvider, menuProvider) {
+        $stateProvider.state("rest-client.reports", {
+            entryName: "Incidents",
+            url: "/reports",
+            controller: "reportsController",
+            templateUrl: "./modules/reports/index.html"
+        });
+
+        menuProvider.add({
+            stateName: "rest-client.index",
+            icon: "exclamation-triangle",
+            name: "Incidents"
+        });
+    }
+]);
+
+angular.module("rest-client").controller("reportsController", [function() {}]);
 
 angular.module("rest-client").config([
     "$stateProvider",
