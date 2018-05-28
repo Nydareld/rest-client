@@ -109,16 +109,24 @@ angular.module('rest-client').run(['$templateCache', function($templateCache) {
   $templateCache.put('./modules/logs/logs.html',
     "<table class=\"table\">\n" +
     "    <tr>\n" +
-    "        <th>Service</th>\n" +
     "        <th>Date</th>\n" +
+    "        <th>Service</th>\n" +
+    "        <th>Id</th>\n" +
     "        <th>Level</th>\n" +
     "        <th>Content</th>\n" +
     "    </tr>\n" +
-    "    <tr ng-repeat=\"log in logs\" class=\"{{log.data.level}}\">\n" +
+    "    <tr>\n" +
+    "        <td colspan=\"5\"><center>Récupérer les logs à jours</center></td>\n" +
+    "    </tr>\n" +
+    "    <tr ng-repeat=\"log in logs\">\n" +
+    "        <td>{{log.data.date|date:\"dd/MM/yyyy HH:mm:ss+sss\"}}</td>\n" +
     "        <td>{{log.data.app}}</td>\n" +
-    "        <td>{{log.data.date}}</td>\n" +
+    "        <td>{{log.transactionId}}</td>\n" +
     "        <td>{{log.data.level}}</td>\n" +
-    "        <td>{{log.data.}}</td>\n" +
+    "        <td>{{log.data.message}}</td>\n" +
+    "    </tr>\n" +
+    "    <tr>\n" +
+    "        <td colspan=\"5\"><center>Plus de logs</center></td>\n" +
     "    </tr>\n" +
     "</table>\n"
   );
