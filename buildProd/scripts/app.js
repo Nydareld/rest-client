@@ -223,7 +223,7 @@ angular.module("rest-client").config([
         });
 
         menuProvider.add({
-            stateName: "rest-client.index",
+            stateName: "rest-client.reports",
             icon: "exclamation-triangle",
             name: "Incidents"
         });
