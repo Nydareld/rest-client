@@ -2,13 +2,20 @@ angular.module("rest-client").config([
     "$stateProvider",
     "menuProvider",
     function($stateProvider, menuProvider) {
-        console.log("here");
         // enregistrement de l'etat logs
         $stateProvider.state("rest-client.logs", {
             entryName: "Logs",
             url: "/logs",
             templateUrl: "./modules/logs/logs.html",
-            controller: "logsController"
+            controller: "logsController",
+            resolve: {
+                logs: [
+                    "logService",
+                    function(logService) {
+                        return logService.get();
+                    }
+                ]
+            }
         });
 
         // enregistrement de l'entrée mennue Logs
