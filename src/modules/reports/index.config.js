@@ -7,7 +7,15 @@ angular.module("rest-client").config([
             entryName: "Incidents",
             url: "/reports",
             controller: "reportsController",
-            templateUrl: "./modules/reports/index.html"
+            templateUrl: "./modules/reports/index.html",
+            resolve: {
+                reports: [
+                    "reportService",
+                    function(reportService) {
+                        return reportService.get();
+                    }
+                ]
+            }
         });
 
         menuProvider.add({
