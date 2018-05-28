@@ -107,31 +107,41 @@ angular.module('rest-client').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('./modules/logs/logs.html',
-    "<div class=\"wrapper wrapper-content\">\n" +
-    "    <div class=\"ibox\">\n" +
-    "        <div class=\"ibox-title\">\n" +
-    "            <h5>Logs</h5>\n" +
-    "        </div>\n" +
-    "        <div class=\"ibox-content\">\n" +
-    "            <div class=\"\">\n" +
-    "                <form-builder structure=\"formStructure\" submit-callback=\"getLogs\" model=\"params\"></form-builder>\n" +
-    "            </div>\n" +
-    "            <div class=\"form-group\">\n" +
-    "                <label>Resulat</label>\n" +
-    "                <br>\n" +
-    "                <div class=\"input-group\" style=\"min-height : 300px; width:100%; max-width:100%;\">\n" +
-    "                    <pre>{{ data | json }}</pre>\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "</div>\n"
+    "<table class=\"table\">\n" +
+    "    <tr>\n" +
+    "        <th>Service</th>\n" +
+    "        <th>Date</th>\n" +
+    "        <th>Level</th>\n" +
+    "        <th>Content</th>\n" +
+    "    </tr>\n" +
+    "    <tr ng-repeat=\"log in logs\" class=\"{{log.data.level}}\">\n" +
+    "        <td>{{log.data.app}}</td>\n" +
+    "        <td>{{log.data.date}}</td>\n" +
+    "        <td>{{log.data.level}}</td>\n" +
+    "        <td>{{log.data.}}</td>\n" +
+    "    </tr>\n" +
+    "</table>\n"
   );
 
 
   $templateCache.put('./modules/reports/index.html',
-    "aa\n"
+    "<table class=\"table\">\n" +
+    "    <tr>\n" +
+    "        <th>Date</th>\n" +
+    "        <th>Type d'erreur</th>\n" +
+    "        <th>Commentaire</th>\n" +
+    "    </tr>\n" +
+    "    <tr ng-repeat=\"report in reports\">\n" +
+    "        <td>{{report.date|date:\"dd/MM/yyyy HH:mm:ss\"}}</td>\n" +
+    "        <td>\n" +
+    "            <span ng-if=\"report.request\">Rest</span>\n" +
+    "            <span ng-if=\"!report.request\">Client</span>\n" +
+    "        </td>\n" +
+    "        <td>\n" +
+    "            {{report.comment}}\n" +
+    "        </td>\n" +
+    "    </tr>\n" +
+    "</table>\n"
   );
 
 

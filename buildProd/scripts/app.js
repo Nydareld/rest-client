@@ -132,13 +132,20 @@ angular.module("rest-client").config([
     "$stateProvider",
     "menuProvider",
     function($stateProvider, menuProvider) {
-        console.log("here");
         // enregistrement de l'etat logs
         $stateProvider.state("rest-client.logs", {
             entryName: "Logs",
             url: "/logs",
             templateUrl: "./modules/logs/logs.html",
-            controller: "logsController"
+            controller: "logsController",
+            resolve: {
+                logs: [
+                    "logService",
+                    function(logService) {
+                        return logService.get();
+                    }
+                ]
+            }
         });
 
         // enregistrement de l'entrée mennue Logs
@@ -152,61 +159,64 @@ angular.module("rest-client").config([
 
 angular.module("rest-client").controller("logsController", [
     "$scope",
-    "$http",
-    function($scope, $http) {
-        $scope.config = {};
-
-        var requestHandler = function(res) {
-            $scope.data = res.data;
-            $scope.headers = res.headers;
-            $scope.raw = res;
-        };
-
-        $scope.formName = "customerForm";
-        $scope.params = {
-            limit: 25,
-            start: 0
-        };
-        $scope.formStructure = [
-            {
-                title: "Parametres généraux",
-                type: "separator"
-            },
-            {
-                allowBlank: true,
-                label: "Limite",
-                name: "limit",
-                type: "number"
-            },
-            {
-                allowBlank: true,
-                label: "Début",
-                name: "start",
-                type: "number"
-            },
-            {
-                title: "Parametres D'api",
-                type: "separator"
-            },
-            {
-                allowBlank: true,
-                label: "Début",
-                name: "app",
-                type: "choice",
-                items: ["info", "error", "debug", "warning"]
-            }
-        ];
-
-        $scope.getLogs = function(params) {
-            console.log(params);
-            $http({
-                method: "GET",
-                params: params,
-                url: "http://redway.nrco.fr:1880/qual/nrcom/logs"
-            })
-                .then(requestHandler)
-                .catch(requestHandler);
-        };
+    "logs",
+    "logService",
+    function($scope, logs, logService) {
+        $scope.logs = logs;
+        //
+        // $scope.config = {};
+        //
+        // var requestHandler = function(res) {
+        //     $scope.data = res.data;
+        //     $scope.headers = res.headers;
+        //     $scope.raw = res;
+        // };
+        //
+        // $scope.formName = "customerForm";
+        // $scope.params = {
+        //     limit: 25,
+        //     start: 0
+        // };
+        // $scope.formStructure = [
+        //     {
+        //         title: "Parametres généraux",
+        //         type: "separator"
+        //     },
+        //     {
+        //         allowBlank: true,
+        //         label: "Limite",
+        //         name: "limit",
+        //         type: "number"
+        //     },
+        //     {
+        //         allowBlank: true,
+        //         label: "Début",
+        //         name: "start",
+        //         type: "number"
+        //     },
+        //     {
+        //         title: "Parametres D'api",
+        //         type: "separator"
+        //     },
+        //     {
+        //         allowBlank: true,
+        //         label: "Début",
+        //         name: "app",
+        //         type: "choice",
+        //         items: ["info", "error", "debug", "warning"]
+        //     }
+        // ];
+        //
+        // $scope.getLogs = function(params) {
+        //     console.log(params);
+        //     $http({
+        //         method: "GET",
+        //         params: params,
+        //         url: "http://redway.nrco.fr:1880/qual/nrcom/logs"
+        //     })
+        //         .then(requestHandler)
+        //         .catch(requestHandler);
+        // };
     }
 ]);
 
@@ -238,7 +248,14 @@ angular.module("rest-client").config([
     }
 ]);
 
-angular.module("rest-client").controller("reportsController", [function() {}]);
+angular.module("rest-client").controller("reportsController", [
+    "$scope",
+    "reports",
+    "reportService",
+    function($scope, reports, reportService) {
+        $scope.reports = reports;
+    }
+]);
 
 angular.module("rest-client").config([
     "$stateProvider",
@@ -289,6 +306,13 @@ angular.module("rest-client").service("errorTypeService", [
     "appResourceProxy",
     function(resource) {
         return resource("/error-type");
+    }
+]);
+
+angular.module("rest-client").service("logService", [
+    "appResourceProxy",
+    function(resource) {
+        return resource("/log");
     }
 ]);
 
