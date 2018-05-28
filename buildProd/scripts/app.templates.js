@@ -79,139 +79,71 @@ angular.module('rest-client').run(['$templateCache', function($templateCache) {
   );
 
 
-  $templateCache.put('./modules/login/login.html',
-    "<div class=\"middle-box text-center loginscreen animated fadeInDown\">\n" +
-    "    <div>\n" +
-    "        <div>\n" +
-    "\n" +
-    "            <h1 class=\"logo-name\">N-I</h1>\n" +
-    "\n" +
+  $templateCache.put('./modules/logs/logs.html',
+    "<div class=\"wrapper wrapper-content logs-content\">\n" +
+    "    <div class=\"ibox\">\n" +
+    "        <div class=\"ibox-title\">\n" +
+    "            <h5>Journaux de logs</h5>\n" +
     "        </div>\n" +
-    "        <h3>Bienvenue dans Nrcom-inspinia</h3>\n" +
-    "        <p>Connectez vous</p>\n" +
-    "        <form class=\"m-t\" role=\"form\" action=\"index.html\">\n" +
-    "            <div class=\"form-group\">\n" +
-    "                <input type=\"email\" class=\"form-control\" placeholder=\"Username\" required=\"\">\n" +
-    "            </div>\n" +
-    "            <div class=\"form-group\">\n" +
-    "                <input type=\"password\" class=\"form-control\" placeholder=\"Password\" required=\"\">\n" +
-    "            </div>\n" +
-    "            <button type=\"submit\" class=\"btn btn-primary block full-width m-b\">Login</button>\n" +
-    "\n" +
-    "            <a href=\"#\"><small>Mot de passe oublié ?</small></a>\n" +
-    "        </form>\n" +
-    "        <p class=\"m-t\"> <small>Inspinia we app framework base on Bootstrap 3 © 2014</small> </p>\n" +
+    "        <div class=\"ibox-content\">\n" +
+    "            <table class=\"table\">\n" +
+    "                <tr>\n" +
+    "                    <th>Date</th>\n" +
+    "                    <th>Service</th>\n" +
+    "                    <th>Id</th>\n" +
+    "                    <th>Level</th>\n" +
+    "                    <th>Content</th>\n" +
+    "                </tr>\n" +
+    "                <tr>\n" +
+    "                    <td colspan=\"5\"><button class=\"btn btn-primary\" style=\"width:100%\">Récupérer les derniers logs</button></td>\n" +
+    "                </tr>\n" +
+    "                <tr ng-repeat=\"log in logs\">\n" +
+    "                    <td>{{log.data.date|date:\"dd/MM/yyyy HH:mm:ss+sss\"}}</td>\n" +
+    "                    <td>{{log.data.app}}</td>\n" +
+    "                    <td>{{log.transactionId}}</td>\n" +
+    "                    <td>{{log.data.level}}</td>\n" +
+    "                    <td>{{log.data.message}}</td>\n" +
+    "                </tr>\n" +
+    "                <tr>\n" +
+    "                    <td colspan=\"5\"><button class=\"btn btn-primary\" style=\"width:100%\">Plus de logs</button></td>\n" +
+    "                </tr>\n" +
+    "            </table>\n" +
+    "        </div>\n" +
     "    </div>\n" +
     "</div>\n"
   );
 
 
-  $templateCache.put('./modules/logs/logs.html',
-    "<table class=\"table\">\n" +
-    "    <tr>\n" +
-    "        <th>Date</th>\n" +
-    "        <th>Service</th>\n" +
-    "        <th>Id</th>\n" +
-    "        <th>Level</th>\n" +
-    "        <th>Content</th>\n" +
-    "    </tr>\n" +
-    "    <tr>\n" +
-    "        <td colspan=\"5\"><center>Récupérer les logs à jours</center></td>\n" +
-    "    </tr>\n" +
-    "    <tr ng-repeat=\"log in logs\">\n" +
-    "        <td>{{log.data.date|date:\"dd/MM/yyyy HH:mm:ss+sss\"}}</td>\n" +
-    "        <td>{{log.data.app}}</td>\n" +
-    "        <td>{{log.transactionId}}</td>\n" +
-    "        <td>{{log.data.level}}</td>\n" +
-    "        <td>{{log.data.message}}</td>\n" +
-    "    </tr>\n" +
-    "    <tr>\n" +
-    "        <td colspan=\"5\"><center>Plus de logs</center></td>\n" +
-    "    </tr>\n" +
-    "</table>\n"
-  );
-
-
   $templateCache.put('./modules/reports/index.html',
-    "<table class=\"table\">\n" +
-    "    <tr>\n" +
-    "        <th>Date</th>\n" +
-    "        <th>Type d'erreur</th>\n" +
-    "        <th>Commentaire</th>\n" +
-    "    </tr>\n" +
-    "    <tr ng-repeat=\"report in reports\">\n" +
-    "        <td>{{report.date|date:\"dd/MM/yyyy HH:mm:ss\"}}</td>\n" +
-    "        <td>\n" +
-    "            <span ng-if=\"report.request\">Rest</span>\n" +
-    "            <span ng-if=\"!report.request\">Client</span>\n" +
-    "        </td>\n" +
-    "        <td>\n" +
-    "            {{report.comment}}\n" +
-    "        </td>\n" +
-    "    </tr>\n" +
-    "</table>\n"
-  );
-
-
-  $templateCache.put('./modules/rest/rest.html',
-    "<div class=\"wrapper wrapper-content\">\n" +
+    "<div class=\"wrapper wrapper-content reports-content\">\n" +
     "    <div class=\"ibox\">\n" +
     "        <div class=\"ibox-title\">\n" +
-    "            <h5>Client rest</h5>\n" +
+    "            <h5>Journaux d'incidents</h5>\n" +
     "        </div>\n" +
     "        <div class=\"ibox-content\">\n" +
-    "            <div class=\"form-group\">\n" +
-    "                <label>Parametres de route</label>\n" +
-    "                <div class=\"input-group\">\n" +
-    "                    <div class=\"input-group-btn\" ng-init=\"config.method  ='GET'\">\n" +
-    "                        <button type=\"button\" class=\"btn\">{{ config.method }}</button>\n" +
-    "                        <button type=\"button\" class=\"btn dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n" +
-    "                            <span class=\"caret\"></span>\n" +
-    "                            <span class=\"sr-only\">Toggle Dropdown</span>\n" +
-    "                        </button>\n" +
-    "                        <ul class=\"dropdown-menu\">\n" +
-    "                            <li ng-click=\"config.method='GET'\"><a>GET</a></li>\n" +
-    "                            <li ng-click=\"config.method='POST'\"><a>POST</a></li>\n" +
-    "                            <li ng-click=\"config.method='PUT'\"><a>PUT</a></li>\n" +
-    "                            <li ng-click=\"config.method='DELETE'\"><a>DELETE</a></li>\n" +
-    "                        </ul>\n" +
-    "                    </div>\n" +
-    "                    <input type=\"text\" class=\"form-control\" ng-model=\"config.url\" placeholder=\"URL\" aria-describedby=\"basic-addon1\">\n" +
-    "                    <span class=\"input-group-btn\">\n" +
-    "                        <button class=\"btn btn-default\" ng-click=\"sendRequst()\" type=\"button\">Envoyer</button>\n" +
-    "                    </span>\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "            <div class=\"form-group\">\n" +
-    "                <label>Contenu</label>\n" +
-    "                <div class=\"input-group\" style=\"height : 300; width:100%;\">\n" +
-    "                    <div ng-model=\"config.data\" style=\"height : 300px; width:100%;\" ui-ace=\"{}\"></div>\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "            <div class=\"form-group\">\n" +
-    "                <label>Resulat</label>\n" +
-    "                <br>\n" +
-    "                <h2 class=\"inspinia-text-primary\">{{ raw.status }} <small> {{ raw.statusText }}</small> </h2>\n" +
-    "                <uib-tabset active=\"0\">\n" +
-    "                    <uib-tab index=\"0\" heading=\"Body\">\n" +
-    "                        <div class=\"input-group\" style=\"min-height : 300px; width:100%; max-width:100%;\">\n" +
-    "                            <pre>{{ data | json }}</pre>\n" +
-    "                        </div>\n" +
-    "                    </uib-tab>\n" +
-    "                    <uib-tab index=\"1\" heading=\"Config\">\n" +
-    "                        <div class=\"input-group\" style=\"min-height : 300px; width:100%; max-width:100%;\">\n" +
-    "                            <pre>{{ config | json }}</pre>\n" +
-    "                        </div>\n" +
-    "                    </uib-tab>\n" +
-    "                    <uib-tab index=\"2\" heading=\"Raw\">\n" +
-    "                        <div class=\"input-group\" style=\"min-height : 300px; width:100%; max-width:100%;\">\n" +
-    "                            <pre>{{ raw | json }}</pre>\n" +
-    "                        </div>\n" +
-    "                    </uib-tab>\n" +
-    "                </uib-tabset>\n" +
-    "\n" +
-    "            </div>\n" +
-    "\n" +
+    "            <table class=\"table\">\n" +
+    "                <tr>\n" +
+    "                    <th>Date</th>\n" +
+    "                    <th>Type d'erreur</th>\n" +
+    "                    <th>Commentaire</th>\n" +
+    "                </tr>\n" +
+    "                <tr>\n" +
+    "                    <td colspan=\"3\"><button class=\"btn btn-primary\">Récupérer les derniers incidents</button></td>\n" +
+    "                </tr>\n" +
+    "                <tr ng-repeat=\"report in reports\">\n" +
+    "                    <td>{{report.date|date:\"dd/MM/yyyy HH:mm:ss+sss\"}}</td>\n" +
+    "                    <td>\n" +
+    "                        <span ng-if=\"report.request\">Rest</span>\n" +
+    "                        <span ng-if=\"!report.request\">Client</span>\n" +
+    "                    </td>\n" +
+    "                    <td>\n" +
+    "                        {{report.comment}}\n" +
+    "                    </td>\n" +
+    "                </tr>\n" +
+    "                <tr>\n" +
+    "                    <td colspan=\"3\"><button class=\"btn btn-primary\">Plus d'incidents</button></td>\n" +
+    "                </tr>\n" +
+    "            </table>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "</div>\n"

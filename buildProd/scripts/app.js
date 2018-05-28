@@ -120,16 +120,6 @@ angular.module("rest-client").controller("indexController", [function() {}]);
 
 angular.module("rest-client").config([
     "$stateProvider",
-    function($stateProvider) {
-        $stateProvider.state("login", {
-            url: "/login",
-            templateUrl: "./modules/login/login.html"
-        });
-    }
-]);
-
-angular.module("rest-client").config([
-    "$stateProvider",
     "menuProvider",
     function($stateProvider, menuProvider) {
         // enregistrement de l'etat logs
@@ -254,51 +244,6 @@ angular.module("rest-client").controller("reportsController", [
     "reportService",
     function($scope, reports, reportService) {
         $scope.reports = reports;
-    }
-]);
-
-angular.module("rest-client").config([
-    "$stateProvider",
-    "menuProvider",
-    function($stateProvider, menuProvider) {
-        // enregistrement de l'etat rest
-        $stateProvider.state("rest-client.rest", {
-            entryName: "Rest",
-            url: "/rest",
-            templateUrl: "./modules/rest/rest.html",
-            controller: "restController"
-        });
-
-        // enregistrement de l'entrée mennue Rest
-        menuProvider.add({
-            stateName: "rest-client.rest",
-            name: "Rest",
-            icon: "code"
-        });
-    }
-]);
-
-angular.module("rest-client").controller("restController", [
-    "$scope",
-    "$http",
-    function($scope, $http) {
-        $scope.config = {};
-
-        var requestHandler = function(res) {
-            $scope.data = res.data;
-            $scope.headers = res.headers;
-            $scope.raw = res;
-        };
-
-        $scope.sendRequst = function() {
-            $http({
-                method: $scope.config.method || "GET",
-                url: $scope.config.url || "localhost:80",
-                data: $scope.config.data || null
-            })
-                .then(requestHandler)
-                .catch(requestHandler);
-        };
     }
 ]);
 
