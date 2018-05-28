@@ -60,8 +60,8 @@ angular
     });
 
 angular.module("rest-client").constant("globals", {
-    api: {
-        baseUrl: "http://localhost/api/v1"
+    plApi: {
+        baseUrl: "/api/v1/error"
     },
     debug: true,
     debugRouter: false,
@@ -219,7 +219,15 @@ angular.module("rest-client").config([
             entryName: "Incidents",
             url: "/reports",
             controller: "reportsController",
-            templateUrl: "./modules/reports/index.html"
+            templateUrl: "./modules/reports/index.html",
+            resolve: {
+                reports: [
+                    "reportService",
+                    function(reportService) {
+                        return reportService.get();
+                    }
+                ]
+            }
         });
 
         menuProvider.add({
@@ -274,5 +282,19 @@ angular.module("rest-client").controller("restController", [
                 .then(requestHandler)
                 .catch(requestHandler);
         };
+    }
+]);
+
+angular.module("rest-client").service("errorTypeService", [
+    "appResourceProxy",
+    function(resource) {
+        return resource("/error-type");
+    }
+]);
+
+angular.module("rest-client").service("reportService", [
+    "appResourceProxy",
+    function(resource) {
+        return resource("/error");
     }
 ]);
