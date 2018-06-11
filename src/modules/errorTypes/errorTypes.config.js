@@ -13,7 +13,9 @@ angular.module("rest-client").config([
                 errorTypes: [
                     "errorTypeService",
                     function(errorTypeService) {
-                        return errorTypeService.get();
+                        return errorTypeService.get(null, {
+                            limit: 0
+                        });
                     }
                 ]
             }
