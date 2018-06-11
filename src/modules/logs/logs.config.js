@@ -8,6 +8,7 @@ angular.module("rest-client").config([
             url: "/logs",
             templateUrl: "./modules/logs/logs.html",
             controller: "logsController",
+            controllerAs: "ctrl",
             resolve: {
                 logs: [
                     "logService",
