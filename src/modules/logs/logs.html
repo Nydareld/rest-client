@@ -1,20 +1,31 @@
-<div class="wrapper wrapper-content">
+<div class="wrapper wrapper-content logs-content">
     <div class="ibox">
         <div class="ibox-title">
-            <h5>Logs</h5>
+            <h5>Journaux de logs</h5>
         </div>
         <div class="ibox-content">
-            <div class="">
-                <form-builder structure="formStructure" submit-callback="getLogs" model="params"></form-builder>
-            </div>
-            <div class="form-group">
-                <label>Resulat</label>
-                <br>
-                <div class="input-group" style="min-height : 300px; width:100%; max-width:100%;">
-                    <pre>{{ data | json }}</pre>
-                </div>
-            </div>
-
+            <table class="table">
+                <tr>
+                    <th>Date</th>
+                    <th>Service</th>
+                    <th>Id</th>
+                    <th>Level</th>
+                    <th>Content</th>
+                </tr>
+                <tr>
+                    <td colspan="5"><button class="btn btn-primary" ng-click="ctrl.refreshLogs()">Récupérer les derniers logs</button></td>
+                </tr>
+                <tr ng-repeat="log in logs">
+                    <td>{{log.data.date|date:"dd/MM/yyyy HH:mm:ss+sss"}}</td>
+                    <td>{{log.data.app}}</td>
+                    <td>{{log.transactionId}}</td>
+                    <td>{{log.data.level}}</td>
+                    <td>{{log.data.message}}</td>
+                </tr>
+                <tr>
+                    <td colspan="5"><button class="btn btn-primary" ng-click="ctrl.getMoreLogs()">Plus de logs</button></td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>

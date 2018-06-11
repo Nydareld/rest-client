@@ -1,5 +1,4 @@
 module.exports = function(grunt) {
-
     var bowerJs = [
         "lib/swing.js",
         "bower_components/jquery/dist/jquery.js",
@@ -22,7 +21,7 @@ module.exports = function(grunt) {
         "bower_components/oclazyload/dist/ocLazyLoad.js",
         "bower_components/metisMenu/dist/metisMenu.js",
         "bower_components/moment/min/moment.min.js",
-        "bower_components/nouislider/distribute/nouislider.min.js",//à retirer?
+        "bower_components/nouislider/distribute/nouislider.min.js", //à retirer?
         "bower_components/angularjs-slider/dist/rzslider.min.js",
         "bower_components/AngularJS-Toaster/toaster.js",
         "bower_components/angular-animate/angular-animate.js",
@@ -38,6 +37,7 @@ module.exports = function(grunt) {
         "bower_components/angular-i18n/angular-locale_fr-fr.js",
         "bower_components/ejs/ejs.js",
         "bower_components/angular-ui-ace/ui-ace.js",
+        "bower_components/sweetalert/dist/sweetalert.min.js",
         "bower_components/nrcom-inspinia/dist/scripts/app.js",
         "bower_components/nrcom-inspinia/dist/scripts/app.templates.js"
     ];
@@ -54,6 +54,7 @@ module.exports = function(grunt) {
         "bower_components/animate.css/animate.css",
         "bower_components/AngularJS-Toaster/toaster.css",
         "bower_components/angular-loading-bar/build/loading-bar.css",
+        "bower_components/sweetalert/dist/sweetalert.css",
         "bower_components/angular-ui-select/dist/select.min.css",
         // "bower_components/nrcom-inspinia/dist/style/style.css", // Commenté pour overide le style
         "bower_components/font-awesome/css/font-awesome.css",
@@ -64,31 +65,31 @@ module.exports = function(grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
         concat: {
-            js: { //target
-                separator : ",",
-                src: [
-                    "./src/*.js",
-                    "./src/**/*.js"
-                ],
+            js: {
+                //target
+                separator: ",",
+                src: ["./src/*.js", "./src/**/*.js"],
                 dest: "./public/scripts/app.js"
             },
             concatBowerCss: {
-                separator : ";",
-                src : bowerCss,
+                separator: ";",
+                src: bowerCss,
                 dest: "./public/style/bower.css"
             },
             concatBowerJs: {
-                separator : ",",
-                src : bowerJs,
+                separator: ",",
+                src: bowerJs,
                 dest: "./public/scripts/bower.js"
             }
         },
         uglify: {
-            js: { //target
+            js: {
+                //target
                 src: ["./public/scripts/app.js"],
                 dest: "./public/scripts/app.min.js"
             },
-            tpl: { //target
+            tpl: {
+                //target
                 src: ["./public/scripts/app.templates.js"],
                 dest: "./public/scripts/app.templates.min.js"
             },
@@ -104,15 +105,17 @@ module.exports = function(grunt) {
                         expand: true,
                         src: ["./statics/**"],
                         dest: "./public/"
-                    },{
+                    },
+                    {
                         expand: true,
                         flatten: true,
                         src: bowerFonts,
                         filter: "isFile",
                         dest: "./public/fonts/"
-                    },{
-                        src : "./src/index.html",
-                        dest : "./public/index.html"
+                    },
+                    {
+                        src: "./src/index.html",
+                        dest: "./public/index.html"
                     }
                 ]
             },
@@ -129,27 +132,27 @@ module.exports = function(grunt) {
             }
         },
         ngtemplates: {
-            "rest-client" : {
-                cwd : "src",
-                src: [
-                    "./**/*.html",
-                    "!./index.html"
-                ],
-                dest:     "public/scripts/app.templates.js"
+            "rest-client": {
+                cwd: "src",
+                src: ["./**/*.html", "!./index.html"],
+                dest: "public/scripts/app.templates.js"
             }
         },
         less: {
-
-            dev :{
+            dev: {
                 files: {
                     "./public/style/style.css": "./src/all.less"
                 }
             },
-            prod :{
+            prod: {
                 options: {
                     plugins: [
-                        new (require("less-plugin-autoprefix"))({browsers: ["last 3 versions"]}),
-                        new (require("less-plugin-clean-css"))({advanced: true})
+                        new (require("less-plugin-autoprefix"))({
+                            browsers: ["last 3 versions"]
+                        }),
+                        new (require("less-plugin-clean-css"))({
+                            advanced: true
+                        })
                     ]
                 },
                 files: {
@@ -157,7 +160,7 @@ module.exports = function(grunt) {
                 }
             }
         },
-        cssmin:{
+        cssmin: {
             options: {
                 shorthandCompacting: false,
                 roundingPrecision: -1
@@ -168,25 +171,33 @@ module.exports = function(grunt) {
                 }
             }
         },
-        watch : {
-            all : {
-                files : [
-                    "./src/**",
-                    "./src/*",
+        watch: {
+            all: {
+                files: ["./src/**", "./src/*"],
+                tasks: [
+                    "concat:js",
+                    "copy:main",
+                    "less:dev",
+                    "ngtemplates:rest-client"
                 ],
-                tasks: ["concat:js", "copy:main", "less:dev","ngtemplates:rest-client"],
                 options: {
-                    livereload: 13337,
+                    livereload:
+                        parseInt(grunt.option("port-livereload")) || 35729
                 }
             },
-            bower : {
-                files : [
+            bower: {
+                files: [
                     "../../dist/scripts/app.js",
                     ".. /../dist/scripts/app.templates.js"
                 ],
-                tasks: ["concat:concatBowerJs", "concat:concatBowerCss","copy:main"],
+                tasks: [
+                    "concat:concatBowerJs",
+                    "concat:concatBowerCss",
+                    "copy:main"
+                ],
                 options: {
-                    livereload: 13337,
+                    livereload:
+                        parseInt(grunt.option("port-livereload")) || 35729
                 }
             }
         },
@@ -196,21 +207,20 @@ module.exports = function(grunt) {
         },
         ngAnnotate: {
             options: {
-                singleQuotes : true
+                singleQuotes: true
             },
             app: {
-                files: {
-
-                }
+                files: {}
             }
         },
-        express:{
-            all:{
-                options:{
-                    port:3000,
-                    hostname:"localhost",
-                    bases:["./public"],
-                    livereload:13337
+        express: {
+            all: {
+                options: {
+                    port: parseInt(grunt.option("port")) || 3000,
+                    hostname: "localhost",
+                    bases: ["./public"],
+                    livereload:
+                        parseInt(grunt.option("port-livereload")) || 35729
                 }
             }
         }
@@ -228,8 +238,21 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-express");
 
     //register grunt default task
-    grunt.registerTask("server",["default","express","watch"]);
-    grunt.registerTask("default", ["ngtemplates","concat", "copy:main", "less:dev"]);
-    grunt.registerTask("prod", ["clean","ngtemplates","concat", "uglify", "copy:main", "less:prod", "cssmin", "copy:prod"]);
-
+    grunt.registerTask("server", ["default", "express", "watch"]);
+    grunt.registerTask("default", [
+        "ngtemplates",
+        "concat",
+        "copy:main",
+        "less:dev"
+    ]);
+    grunt.registerTask("prod", [
+        "clean",
+        "ngtemplates",
+        "concat",
+        "uglify",
+        "copy:main",
+        "less:prod",
+        "cssmin",
+        "copy:prod"
+    ]);
 };
