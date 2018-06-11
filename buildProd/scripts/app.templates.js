@@ -39,6 +39,8 @@ angular.module('rest-client').run(['$templateCache', function($templateCache) {
     "                    home-state-text=\"rest client\">\n" +
     "        </breadcrumbs>\n" +
     "\n" +
+    "        <toaster-container></toaster-container>\n" +
+    "\n" +
     "        <!-- Main view  -->\n" +
     "        <div ui-view></div>\n" +
     "\n" +
@@ -58,6 +60,57 @@ angular.module('rest-client').run(['$templateCache', function($templateCache) {
     "\n" +
     "</div>\n" +
     "<!-- End wrapper-->\n"
+  );
+
+
+  $templateCache.put('./modules/errorTypes/errorTypes.html',
+    "<div class=\"wrapper wrapper-content error-types-content\">\n" +
+    "    <div class=\"ibox\">\n" +
+    "        <div class=\"ibox-title\">\n" +
+    "            <h5>Erreurs fonctionelles</h5>\n" +
+    "        </div>\n" +
+    "        <div class=\"ibox-content\">\n" +
+    "            <table class=\"table\">\n" +
+    "                <tr>\n" +
+    "                    <th>Name</th>\n" +
+    "                    <th>Message</th>\n" +
+    "                </tr>\n" +
+    "                <tr>\n" +
+    "                    <td>\n" +
+    "                        <div class=\"input-group\">\n" +
+    "                            <input type=\"text\" class=\"form-control\" placeholder=\"Nom erreur\" ng-model=\"errorType.name\">\n" +
+    "                        </div>\n" +
+    "                    </td>\n" +
+    "                    <td>\n" +
+    "                        <div class=\"input-group\">\n" +
+    "                            <input type=\"text\" class=\"form-control\" placeholder=\"Message\" ng-model=\"errorType.message\">\n" +
+    "                            <span class=\"input-group-btn\">\n" +
+    "                                <button class=\"btn btn-primary\" type=\"button\" ng-click=\"ctrl.addType(errorType)\"><span class=\"fa fa-plus\"></span></button>\n" +
+    "                            </span>\n" +
+    "                        </div>\n" +
+    "                    </td>\n" +
+    "                </tr>\n" +
+    "                <tr ng-repeat=\"err in errorTypes\">\n" +
+    "\n" +
+    "                    <td>\n" +
+    "                        <div class=\"input-group\">\n" +
+    "                            <input type=\"text\" class=\"form-control\" placeholder=\"Nom erreur\" ng-model=\"err.name\">\n" +
+    "                        </div>\n" +
+    "                    </td>\n" +
+    "                    <td>\n" +
+    "                        <div class=\"input-group\">\n" +
+    "                            <input type=\"text\" class=\"form-control\" placeholder=\"Message\" ng-model=\"err.message\">\n" +
+    "                            <span class=\"input-group-btn\">\n" +
+    "                                <button class=\"btn btn-secondary\" type=\"button\" ng-click=\"ctrl.deleteType(err)\"><span class=\"fa fa-trash\"></span></button>\n" +
+    "                                <button class=\"btn btn-primary\" type=\"button\" ng-click=\"ctrl.addType(err)\"><span class=\"fa fa-save\"></span></button>\n" +
+    "                            </span>\n" +
+    "                        </div>\n" +
+    "                    </td>\n" +
+    "                </tr>\n" +
+    "            </table>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n"
   );
 
 
