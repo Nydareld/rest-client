@@ -52,16 +52,16 @@ angular.module("rest-client").controller("errorTypesController", [
                     closeOnConfirm: false,
                     closeOnCancel: false
                 })
-                .then(() => {
+                .then(function() {
                     return errorTypeService.delete(type);
                 })
-                .then(() => {
+                .then(function() {
                     $scope.errorTypes.splice(
                         $scope.errorTypes.indexOf(type),
                         1
                     );
                 })
-                .catch(err => {
+                .catch(function(err) {
                     if (err !== true) {
                         toaster.error("Erreur", err);
                         throw err;
