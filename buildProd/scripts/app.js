@@ -78,6 +78,12 @@ angular.module("rest-client").config([
     }
 ]);
 
+angular.module("rest-client").filter("stripHtml", function() {
+    return function(input) {
+        return input.replace(/<[^>]*>/g, "");
+    };
+});
+
 angular.module("rest-client").controller("RootController", [
     "$rootScope",
     function($rootScope) {
@@ -235,6 +241,7 @@ angular.module("rest-client").config([
             url: "/logs",
             templateUrl: "./modules/logs/logs.html",
             controller: "logsController",
+            controllerAs: "ctrl",
             resolve: {
                 logs: [
                     "logService",
@@ -259,61 +266,30 @@ angular.module("rest-client").controller("logsController", [
     "logs",
     "logService",
     function($scope, logs, logService) {
+        const me = this;
         $scope.logs = logs;
-        //
-        // $scope.config = {};
-        //
-        // var requestHandler = function(res) {
-        //     $scope.data = res.data;
-        //     $scope.headers = res.headers;
-        //     $scope.raw = res;
-        // };
-        //
-        // $scope.formName = "customerForm";
-        // $scope.params = {
-        //     limit: 25,
-        //     start: 0
-        // };
-        // $scope.formStructure = [
-        //     {
-        //         title: "Parametres généraux",
-        //         type: "separator"
-        //     },
-        //     {
-        //         allowBlank: true,
-        //         label: "Limite",
-        //         name: "limit",
-        //         type: "number"
-        //     },
-        //     {
-        //         allowBlank: true,
-        //         label: "Début",
-        //         name: "start",
-        //         type: "number"
-        //     },
-        //     {
-        //         title: "Parametres D'api",
-        //         type: "separator"
-        //     },
-        //     {
-        //         allowBlank: true,
-        //         label: "Début",
-        //         name: "app",
-        //         type: "choice",
-        //         items: ["info", "error", "debug", "warning"]
-        //     }
-        // ];
-        //
-        // $scope.getLogs = function(params) {
-        //     console.log(params);
-        //     $http({
-        //         method: "GET",
-        //         params: params,
-        //         url: "http://redway.nrco.fr:1880/qual/nrcom/logs"
-        //     })
-        //         .then(requestHandler)
-        //         .catch(requestHandler);
-        // };
+        this.defaultLimitSize = 50;
+        this.limitSize = this.defaultLimitSize;
+
+        // fournis les logs selon la limite courante
+        this.refreshLogs = function() {
+            logService
+                .get(null, {
+                    limit: me.limitSize
+                })
+                .then(function(res) {
+                    $scope.logs = res;
+                })
+                .catch(function(err) {
+                    throw err;
+                });
+        };
+
+        // ajoute plus d'éléments et rafraichis
+        this.getMoreLogs = function() {
+            me.limitSize += me.defaultLimitSize;
+            me.refreshLogs();
+        };
     }
 ]);
 
@@ -326,12 +302,15 @@ angular.module("rest-client").config([
             entryName: "Incidents",
             url: "/reports",
             controller: "reportsController",
+            controllerAs: "ctrl",
             templateUrl: "./modules/reports/index.html",
             resolve: {
                 reports: [
                     "reportService",
                     function(reportService) {
-                        return reportService.get();
+                        return reportService.get(null, {
+                            limit: 0
+                        });
                     }
                 ]
             }
@@ -351,6 +330,79 @@ angular.module("rest-client").controller("reportsController", [
     "reportService",
     function($scope, reports, reportService) {
         $scope.reports = reports;
+        this.refreshReports = function() {
+            reportService
+                .get(null, {
+                    limit: 0
+                })
+                .then(function(res) {
+                    $scope.reports = res;
+                })
+                .catch(function(err) {
+                    throw err;
+                });
+        };
+    }
+]);
+
+angular.module("rest-client").config([
+    "$stateProvider",
+    "$urlRouterProvider",
+    "menuProvider",
+    function($stateProvider, $urlRouterProvider, menuProvider) {
+        $stateProvider.state("rest-client.reports.report", {
+            entryName: [
+                "report",
+                function(report) {
+                    return "Rapport " + report._id;
+                }
+            ],
+            url: "/:id",
+            controller: "reportController",
+            controllerAs: "ctrl",
+            templateUrl: "./modules/reports/report/index.html",
+            resolve: {
+                report: [
+                    "reportService",
+                    "$stateParams",
+                    function(reportService, $stateParams) {
+                        console.log($stateParams);
+                        return reportService.getById({ _id: $stateParams.id });
+                    }
+                ],
+                logs: [
+                    "logService",
+                    "report",
+                    function(logService, report) {
+                        const reportDate = new Date(report.date);
+                        return logService.get(null, {
+                            filter: JSON.stringify({
+                                date: {
+                                    $lt: new Date(
+                                        reportDate.getTime() + 1000 * 60
+                                    ),
+                                    $gt: new Date(
+                                        reportDate.getTime() - 1000 * 60
+                                    )
+                                }
+                            })
+                        });
+                    }
+                ]
+            }
+        });
+    }
+]);
+
+angular.module("rest-client").controller("reportController", [
+    "$scope",
+    "report",
+    "logs",
+    "logService",
+    "reportService",
+    function($scope, report, logs, logService, reportService) {
+        $scope.logs = logs;
+        $scope.report = report;
     }
 ]);
 

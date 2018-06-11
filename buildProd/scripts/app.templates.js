@@ -148,7 +148,7 @@ angular.module('rest-client').run(['$templateCache', function($templateCache) {
     "                    <th>Content</th>\n" +
     "                </tr>\n" +
     "                <tr>\n" +
-    "                    <td colspan=\"5\"><button class=\"btn btn-primary\" style=\"width:100%\">Récupérer les derniers logs</button></td>\n" +
+    "                    <td colspan=\"5\"><button class=\"btn btn-primary\" ng-click=\"ctrl.refreshLogs()\">Récupérer les derniers logs</button></td>\n" +
     "                </tr>\n" +
     "                <tr ng-repeat=\"log in logs\">\n" +
     "                    <td>{{log.data.date|date:\"dd/MM/yyyy HH:mm:ss+sss\"}}</td>\n" +
@@ -158,7 +158,7 @@ angular.module('rest-client').run(['$templateCache', function($templateCache) {
     "                    <td>{{log.data.message}}</td>\n" +
     "                </tr>\n" +
     "                <tr>\n" +
-    "                    <td colspan=\"5\"><button class=\"btn btn-primary\" style=\"width:100%\">Plus de logs</button></td>\n" +
+    "                    <td colspan=\"5\"><button class=\"btn btn-primary\" ng-click=\"ctrl.getMoreLogs()\">Plus de logs</button></td>\n" +
     "                </tr>\n" +
     "            </table>\n" +
     "        </div>\n" +
@@ -168,35 +168,85 @@ angular.module('rest-client').run(['$templateCache', function($templateCache) {
 
 
   $templateCache.put('./modules/reports/index.html',
-    "<div class=\"wrapper wrapper-content reports-content\">\n" +
+    "<div ui-view>\n" +
+    "    <div class=\"wrapper wrapper-content reports-content\">\n" +
+    "        <div class=\"ibox\">\n" +
+    "            <div class=\"ibox-title\">\n" +
+    "                <h5>Journaux d'incidents</h5>\n" +
+    "            </div>\n" +
+    "            <div class=\"ibox-content\">\n" +
+    "                <table class=\"table\">\n" +
+    "                    <tr>\n" +
+    "                        <th>Date</th>\n" +
+    "                        <th>Type d'erreur</th>\n" +
+    "                        <th>Commentaire</th>\n" +
+    "                    </tr>\n" +
+    "                    <tr>\n" +
+    "                        <td colspan=\"3\"><button class=\"btn btn-primary\" ng-click=\"ctrl.refreshReports()\">Récupérer les derniers incidents</button></td>\n" +
+    "                    </tr>\n" +
+    "                    <tr ng-repeat=\"report in reports\" ui-sref=\"rest-client.reports.report({'id': '{{report._id}}'})\">\n" +
+    "                        <td>{{report.date|date:\"dd/MM/yyyy HH:mm:ss+sss\"}}</td>\n" +
+    "                        <td>\n" +
+    "                            <span ng-if=\"report.request\">Rest</span>\n" +
+    "                            <span ng-if=\"!report.request\">Client</span>\n" +
+    "                        </td>\n" +
+    "                        <td>\n" +
+    "                            {{report.comment|stripHtml}}\n" +
+    "                        </td>\n" +
+    "                    </tr>\n" +
+    "                </table>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n"
+  );
+
+
+  $templateCache.put('./modules/reports/report/index.html',
+    "<div class=\"wrapper wrapper-content report-content\">\n" +
     "    <div class=\"ibox\">\n" +
     "        <div class=\"ibox-title\">\n" +
-    "            <h5>Journaux d'incidents</h5>\n" +
+    "            <h5>Incident {{report._id}}</h5>\n" +
     "        </div>\n" +
     "        <div class=\"ibox-content\">\n" +
-    "            <table class=\"table\">\n" +
-    "                <tr>\n" +
-    "                    <th>Date</th>\n" +
-    "                    <th>Type d'erreur</th>\n" +
-    "                    <th>Commentaire</th>\n" +
-    "                </tr>\n" +
-    "                <tr>\n" +
-    "                    <td colspan=\"3\"><button class=\"btn btn-primary\">Récupérer les derniers incidents</button></td>\n" +
-    "                </tr>\n" +
-    "                <tr ng-repeat=\"report in reports\">\n" +
-    "                    <td>{{report.date|date:\"dd/MM/yyyy HH:mm:ss+sss\"}}</td>\n" +
-    "                    <td>\n" +
-    "                        <span ng-if=\"report.request\">Rest</span>\n" +
-    "                        <span ng-if=\"!report.request\">Client</span>\n" +
-    "                    </td>\n" +
-    "                    <td>\n" +
-    "                        {{report.comment}}\n" +
-    "                    </td>\n" +
-    "                </tr>\n" +
-    "                <tr>\n" +
-    "                    <td colspan=\"3\"><button class=\"btn btn-primary\">Plus d'incidents</button></td>\n" +
-    "                </tr>\n" +
-    "            </table>\n" +
+    "            <div class=\"row\">\n" +
+    "                <div class=\"col-md-6\">\n" +
+    "                    <div class=\"row\">\n" +
+    "                        <div class=\"col-md-6\">Identifiant</div>\n" +
+    "                        <div class=\"col-md-6\">{{report._id}}</div>\n" +
+    "                        <div class=\"col-md-6\">Date de l'anomalie</div>\n" +
+    "                        <div class=\"col-md-6\">{{report.date|date:\"dd/MM/yyyy HH:mm:ss+sss\"}}</div>\n" +
+    "                        <div class=\"col-md-6\">Date de soumission</div>\n" +
+    "                        <div class=\"col-md-6\">{{report.created.date|date:\"dd/MM/yyyy HH:mm:ss+sss\"}}</div>\n" +
+    "                        <div class=\"col-md-6\">Naviguateur</div>\n" +
+    "                        <div class=\"col-md-6\">{{report.software.browser}}</div>\n" +
+    "                        <div class=\"col-md-6\">Système d'exploitation</div>\n" +
+    "                        <div class=\"col-md-6\">{{report.software.os}}</div>\n" +
+    "                        <div class=\"col-md-6\">Version</div>\n" +
+    "                        <div class=\"col-md-6\">{{report.software.version}}</div>\n" +
+    "                        <div class=\"col-md-6\">Commentaire</div>\n" +
+    "                        <div class=\"col-md-6\">{{report.comment|stripHtml}}</div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "                <div class=\"col-md-6\">\n" +
+    "                    <table class=\"table\">\n" +
+    "                        <tr>\n" +
+    "                            <th>Date</th>\n" +
+    "                            <th>Service</th>\n" +
+    "                            <th>Id</th>\n" +
+    "                            <th>Level</th>\n" +
+    "                            <th>Content</th>\n" +
+    "                        </tr>\n" +
+    "                        <tr ng-repeat=\"log in logs\">\n" +
+    "                            <td>{{log.data.date|date:\"dd/MM/yyyy HH:mm:ss+sss\"}}</td>\n" +
+    "                            <td>{{log.data.app}}</td>\n" +
+    "                            <td>{{log.transactionId}}</td>\n" +
+    "                            <td>{{log.data.level}}</td>\n" +
+    "                            <td>{{log.data.message}}</td>\n" +
+    "                        </tr>\n" +
+    "                    </table>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
     "        </div>\n" +
     "    </div>\n" +
     "</div>\n"
