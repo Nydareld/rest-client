@@ -7,12 +7,15 @@ angular.module("rest-client").config([
             entryName: "Incidents",
             url: "/reports",
             controller: "reportsController",
+            controllerAs: "ctrl",
             templateUrl: "./modules/reports/index.html",
             resolve: {
                 reports: [
                     "reportService",
                     function(reportService) {
-                        return reportService.get();
+                        return reportService.get(null, {
+                            limit: 0
+                        });
                     }
                 ]
             }

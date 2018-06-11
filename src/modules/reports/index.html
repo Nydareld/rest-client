@@ -11,7 +11,7 @@
                     <th>Commentaire</th>
                 </tr>
                 <tr>
-                    <td colspan="3"><button class="btn btn-primary">Récupérer les derniers incidents</button></td>
+                    <td colspan="3"><button class="btn btn-primary" ng-click="ctrl.refreshReports()">Récupérer les derniers incidents</button></td>
                 </tr>
                 <tr ng-repeat="report in reports">
                     <td>{{report.date|date:"dd/MM/yyyy HH:mm:ss+sss"}}</td>
@@ -20,11 +20,8 @@
                         <span ng-if="!report.request">Client</span>
                     </td>
                     <td>
-                        {{report.comment}}
+                        {{report.comment|stripHtml}}
                     </td>
-                </tr>
-                <tr>
-                    <td colspan="3"><button class="btn btn-primary">Plus d'incidents</button></td>
                 </tr>
             </table>
         </div>
