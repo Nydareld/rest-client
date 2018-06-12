@@ -37,6 +37,7 @@ module.exports = function(grunt) {
         "bower_components/angular-i18n/angular-locale_fr-fr.js",
         "bower_components/ejs/ejs.js",
         "bower_components/angular-ui-ace/ui-ace.js",
+        "bower_components/sweetalert/dist/sweetalert.min.js",
         "bower_components/nrcom-inspinia/dist/scripts/app.js",
         "bower_components/nrcom-inspinia/dist/scripts/app.templates.js"
     ];
@@ -53,6 +54,7 @@ module.exports = function(grunt) {
         "bower_components/animate.css/animate.css",
         "bower_components/AngularJS-Toaster/toaster.css",
         "bower_components/angular-loading-bar/build/loading-bar.css",
+        "bower_components/sweetalert/dist/sweetalert.css",
         "bower_components/angular-ui-select/dist/select.min.css",
         // "bower_components/nrcom-inspinia/dist/style/style.css", // Commenté pour overide le style
         "bower_components/font-awesome/css/font-awesome.css",
