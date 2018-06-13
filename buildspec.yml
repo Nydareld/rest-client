@@ -1,0 +1,29 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Loging in to Amazon ECR...
+      - aws --version
+      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+      - REPOSITORY_URI=102888717683.dkr.ecr.eu-west-1.amazonaws.com/plv2-qual
+      - IMAGE_TAG=$(echo `date +%s`)
+      - echo $IMAGE_TAG
+
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker image...
+      - docker build -t $REPOSITORY_URI:front-error-manager.qual .
+      - docker tag $REPOSITORY_URI:front-error-manager.qual $REPOSITORY_URI:front-error-manager.$IMAGE_TAG
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker image...
+      - docker push $REPOSITORY_URI:front-error-manager.qual
+      - docker push $REPOSITORY_URI:front-error-manager.$IMAGE_TAG
+      - echo Writing image definitions file...
+      - printf '[{"name":"front-error-manager","imageUri":"%s"}]' $REPOSITORY_URI:front-error-manager.$IMAGE_TAG > imagedefinitions.json
+artifacts:
+    files: imagedefinitions.json
