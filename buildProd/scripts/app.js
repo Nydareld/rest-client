@@ -409,20 +409,20 @@ angular.module("rest-client").controller("reportController", [
 angular.module("rest-client").service("errorTypeService", [
     "appResourceProxy",
     function(resource) {
-        return resource("/error-types");
+        return resource("/error/error-types");
     }
 ]);
 
 angular.module("rest-client").service("logService", [
     "appResourceProxy",
     function(resource) {
-        return resource("/log");
+        return resource("/error/log");
     }
 ]);
 
 angular.module("rest-client").service("reportService", [
     "appResourceProxy",
     function(resource) {
-        return resource("/error");
+        return resource("/error/error");
     }
 ]);
