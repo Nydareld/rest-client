@@ -61,7 +61,7 @@ angular
 
 angular.module("rest-client").constant("globals", {
     plApi: {
-        baseUrl: "/api/v1"
+        baseUrl: "/api/v1/error-manager"
     },
     debug: true,
     debugRouter: false,
@@ -409,20 +409,20 @@ angular.module("rest-client").controller("reportController", [
 angular.module("rest-client").service("errorTypeService", [
     "appResourceProxy",
     function(resource) {
-        return resource("/error/error-types");
+        return resource("/error-types");
     }
 ]);
 
 angular.module("rest-client").service("logService", [
     "appResourceProxy",
     function(resource) {
-        return resource("/error/log");
+        return resource("/log");
     }
 ]);
 
 angular.module("rest-client").service("reportService", [
     "appResourceProxy",
     function(resource) {
-        return resource("/error/error");
+        return resource("/error");
     }
 ]);
