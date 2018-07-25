@@ -252,4 +252,69 @@ angular.module('rest-client').run(['$templateCache', function($templateCache) {
     "</div>\n"
   );
 
+
+  $templateCache.put('./modules/rest/rest.html',
+    "<div class=\"wrapper wrapper-content\">\n" +
+    "    <div class=\"ibox\">\n" +
+    "        <div class=\"ibox-title\">\n" +
+    "            <h5>Client rest</h5>\n" +
+    "        </div>\n" +
+    "        <div class=\"ibox-content\">\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label>Parametres de route</label>\n" +
+    "                <div class=\"input-group\">\n" +
+    "                    <div class=\"input-group-btn\" ng-init=\"config.method  ='GET'\">\n" +
+    "                        <button type=\"button\" class=\"btn\">{{ config.method }}</button>\n" +
+    "                        <button type=\"button\" class=\"btn dropdown-toggle\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n" +
+    "                            <span class=\"caret\"></span>\n" +
+    "                            <span class=\"sr-only\">Toggle Dropdown</span>\n" +
+    "                        </button>\n" +
+    "                        <ul class=\"dropdown-menu\">\n" +
+    "                            <li ng-click=\"config.method='GET'\"><a>GET</a></li>\n" +
+    "                            <li ng-click=\"config.method='POST'\"><a>POST</a></li>\n" +
+    "                            <li ng-click=\"config.method='PUT'\"><a>PUT</a></li>\n" +
+    "                            <li ng-click=\"config.method='DELETE'\"><a>DELETE</a></li>\n" +
+    "                        </ul>\n" +
+    "                    </div>\n" +
+    "                    <input type=\"text\" class=\"form-control\" ng-model=\"config.url\" placeholder=\"URL\" aria-describedby=\"basic-addon1\">\n" +
+    "                    <span class=\"input-group-btn\">\n" +
+    "                        <button class=\"btn btn-default\" ng-click=\"sendRequst()\" type=\"button\">Envoyer</button>\n" +
+    "                    </span>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label>Contenu</label>\n" +
+    "                <div class=\"input-group\" style=\"height : 300; width:100%;\">\n" +
+    "                    <div ng-model=\"config.data\" style=\"height : 300px; width:100%;\" ui-ace=\"{}\"></div>\n" +
+    "                </div>\n" +
+    "            </div>\n" +
+    "            <div class=\"form-group\">\n" +
+    "                <label>Resulat</label>\n" +
+    "                <br>\n" +
+    "                <h2 class=\"inspinia-text-primary\">{{ raw.status }} <small> {{ raw.statusText }}</small> </h2>\n" +
+    "                <uib-tabset active=\"0\">\n" +
+    "                    <uib-tab index=\"0\" heading=\"Body\">\n" +
+    "                        <div class=\"input-group\" style=\"min-height : 300px; width:100%; max-width:100%;\">\n" +
+    "                            <pre>{{ data | json }}</pre>\n" +
+    "                        </div>\n" +
+    "                    </uib-tab>\n" +
+    "                    <uib-tab index=\"1\" heading=\"Config\">\n" +
+    "                        <div class=\"input-group\" style=\"min-height : 300px; width:100%; max-width:100%;\">\n" +
+    "                            <pre>{{ config | json }}</pre>\n" +
+    "                        </div>\n" +
+    "                    </uib-tab>\n" +
+    "                    <uib-tab index=\"2\" heading=\"Raw\">\n" +
+    "                        <div class=\"input-group\" style=\"min-height : 300px; width:100%; max-width:100%;\">\n" +
+    "                            <pre>{{ raw | json }}</pre>\n" +
+    "                        </div>\n" +
+    "                    </uib-tab>\n" +
+    "                </uib-tabset>\n" +
+    "\n" +
+    "            </div>\n" +
+    "\n" +
+    "        </div>\n" +
+    "    </div>\n" +
+    "</div>\n"
+  );
+
 }]);
