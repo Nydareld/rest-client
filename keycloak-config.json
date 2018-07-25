@@ -1,0 +1,32 @@
+{
+    "realms": [
+        {
+            "realm": "master",
+            "clients": [
+                {
+                    "clientId": "front-error-manager",
+                    "redirectUris": [
+                        "http://localhost:28000/manager/error/*",
+                        "http://plv2-qual.nrco.fr/manager/error/*"
+                    ],
+                    "webOrigins": [
+                        "http://localhost:28000",
+                        "http://plv2-qual.nrco.fr"
+                    ],
+                    "publicClient": true,
+                    "bearerOnly": false,
+                    "roles": [
+                        {
+                            "name": "logged",
+                            "description": "permet d'acceder au manager plv2"
+                        },
+                        {
+                            "name": "rest",
+                            "description": "permet d'acceder a la partie rest"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
