@@ -14,11 +14,12 @@ var keycloakJson = {
 };
 
 // config with qual keycloak
-var hostname = window.location.hostname;
+var hostname = window.location.hostname,
+    protocol = window.location.protocol;
 if (/localhost/.test(hostname) || /plv2\-qual\.nr(?:co|)\.fr/.test(hostname)) {
-    keycloakJson.url = "http://auth-qual.nr.fr/auth";
+    keycloakJson.url = protocol + "//auth-qual.nrco.fr/auth";
 } else if (/plv2\.nr(?:co|)\.fr/.test(hostname)) {
-    keycloakJson.url = "http://auth.nr.fr/auth";
+    keycloakJson.url = protocol + "//auth.nrco.fr/auth";
 }
 
 angular
