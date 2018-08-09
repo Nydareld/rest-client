@@ -30,7 +30,7 @@ var keycloakJson = {
 // config with qual keycloak
 var hostname = window.location.hostname;
 if (/localhost/.test(hostname) || /plv2\-qual\.nr(?:co|)\.fr/.test(hostname)) {
-    keycloakJson.url = "http://auth-plv2-qual.nr.fr/auth";
+    keycloakJson.url = "http://auth-qual.nr.fr/auth";
 } else if (/plv2\.nr(?:co|)\.fr/.test(hostname)) {
     keycloakJson.url = "http://auth.nr.fr/auth";
 }
