@@ -6,7 +6,7 @@
  */
 
 var keycloakJson = {
-    realm: "master",
+    realm: "pro-legales",
     url: "http://plv2-qual.nrco.fr/auth",
     clientId: "error-manager",
     "ssl-required": "external",
