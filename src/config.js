@@ -4,6 +4,15 @@
  *      - Mode html5 des url
  *      - Etat root
  */
+
+var keycloakJson = {
+    realm: "master",
+    url: "http://plv2-qual.nrco.fr/auth",
+    clientId: "front-error-manager",
+    "ssl-required": "external",
+    "public-client": true
+};
+
 angular
     .module("rest-client")
     .config([

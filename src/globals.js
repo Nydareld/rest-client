@@ -1,6 +1,6 @@
 angular.module("rest-client").constant("globals", {
-    api: {
-        baseUrl: "http://localhost/api/v1"
+    plApi: {
+        baseUrl: "/api/v1/error-manager"
     },
     debug: true,
     debugRouter: false,

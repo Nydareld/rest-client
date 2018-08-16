@@ -1,1 +1,3 @@
-# rest-client
+# front-error-manager
+
+Gestionaire d'erreurs

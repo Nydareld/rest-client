@@ -1,0 +1,47 @@
+<div class="wrapper wrapper-content error-types-content">
+    <div class="ibox">
+        <div class="ibox-title">
+            <h5>Erreurs fonctionelles</h5>
+        </div>
+        <div class="ibox-content">
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Message</th>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Nom erreur" ng-model="errorType.name">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Message" ng-model="errorType.message">
+                            <span class="input-group-btn">
+                                <button class="btn btn-primary" type="button" ng-click="ctrl.addType(errorType)"><span class="fa fa-plus"></span></button>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-repeat="err in errorTypes">
+
+                    <td>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Nom erreur" ng-model="err.name">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Message" ng-model="err.message">
+                            <span class="input-group-btn">
+                                <button class="btn btn-secondary" type="button" ng-click="ctrl.deleteType(err)"><span class="fa fa-trash"></span></button>
+                                <button class="btn btn-primary" type="button" ng-click="ctrl.addType(err)"><span class="fa fa-save"></span></button>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

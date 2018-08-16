@@ -1,0 +1,31 @@
+<div ui-view>
+    <div class="wrapper wrapper-content reports-content">
+        <div class="ibox">
+            <div class="ibox-title">
+                <h5>Journaux d'incidents</h5>
+            </div>
+            <div class="ibox-content">
+                <table class="table">
+                    <tr>
+                        <th>Date</th>
+                        <th>Type d'erreur</th>
+                        <th>Commentaire</th>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><button class="btn btn-primary" ng-click="ctrl.refreshReports()">Récupérer les derniers incidents</button></td>
+                    </tr>
+                    <tr ng-repeat="report in reports" ui-sref="rest-client.reports.report({'id': '{{report._id}}'})">
+                        <td>{{report.date|date:"dd/MM/yyyy HH:mm:ss+sss"}}</td>
+                        <td>
+                            <span ng-if="report.request">Rest</span>
+                            <span ng-if="!report.request">Client</span>
+                        </td>
+                        <td>
+                            {{report.comment|stripHtml}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

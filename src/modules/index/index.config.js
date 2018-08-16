@@ -13,7 +13,8 @@ angular.module("rest-client").config([
         menuProvider.add({
             stateName: "rest-client.index",
             icon: "home",
-            name: "Accueil"
+            name: "Accueil",
+            importance: 0
         });
     }
 ]);

@@ -18,6 +18,15 @@ var modulesToRun = ["rest-client"];
  *      - Mode html5 des url
  *      - Etat root
  */
+
+var keycloakJson = {
+    realm: "master",
+    url: "http://plv2-qual.nrco.fr/auth",
+    clientId: "front-error-manager",
+    "ssl-required": "external",
+    "public-client": true
+};
+
 angular
     .module("rest-client")
     .config([
@@ -51,8 +60,8 @@ angular
     });
 
 angular.module("rest-client").constant("globals", {
-    api: {
-        baseUrl: "http://localhost/api/v1"
+    plApi: {
+        baseUrl: "/api/v1/error-manager"
     },
     debug: true,
     debugRouter: false,
@@ -68,6 +77,12 @@ angular.module("rest-client").config([
         });
     }
 ]);
+
+angular.module("rest-client").filter("stripHtml", function() {
+    return function(input) {
+        return input.replace(/<[^>]*>/g, "");
+    };
+});
 
 angular.module("rest-client").controller("RootController", [
     "$rootScope",
@@ -89,6 +104,112 @@ angular.module("rest-client").controller("RootController", [
 
 angular.module("rest-client").config([
     "$stateProvider",
+    "menuProvider",
+    function($stateProvider, menuProvider) {
+        // enregistrement de l'etat logs
+        $stateProvider.state("rest-client.error-types", {
+            entryName: "Erreurs fonctionelles",
+            url: "/error-types",
+            templateUrl: "./modules/errorTypes/errorTypes.html",
+            controller: "errorTypesController",
+            controllerAs: "ctrl",
+            resolve: {
+                errorTypes: [
+                    "errorTypeService",
+                    function(errorTypeService) {
+                        return errorTypeService.get(null, {
+                            limit: 0
+                        });
+                    }
+                ]
+            }
+        });
+
+        // enregistrement de l'entrée mennue Logs
+        menuProvider.add({
+            stateName: "rest-client.error-types",
+            name: "Erreurs fonctionelles",
+            icon: "exclamation",
+            importance: 100
+        });
+    }
+]);
+
+angular.module("rest-client").controller("errorTypesController", [
+    "$scope",
+    "errorTypes",
+    "errorTypeService",
+    "swal",
+    "toaster",
+    function($scope, errorTypes, errorTypeService, swal, toaster) {
+        $scope.errorType = {}; // élément contenant un nouveau type d'erreur
+        $scope.errorTypes = errorTypes; // liste des types d'erreurs
+
+        // ajoute ou modifie une errorType
+        this.addType = function(data) {
+            var promise,
+                phantom = angular.isUndefined(data._id);
+
+            // on drive la méthode en fonction du type d'objet transmis
+            if (phantom) {
+                promise = errorTypeService.post(data);
+            } else {
+                promise = errorTypeService.put(data);
+            }
+
+            promise
+                .then(function(res) {
+                    if (phantom) {
+                        // dans le cas d'une créa on l'ajoute au tableau
+                        $scope.errorTypes.unshift(data);
+                        $scope.errorType = {};
+                    } else {
+                        // dans le cas d'une modification on le met à jour
+                        data = res;
+                    }
+                    // dans tous les cas on envoi une notification de réussite
+                    toaster.success(
+                        "Sauvegarde réussie",
+                        "Type enregistré avec succès"
+                    );
+                })
+                .catch(function(err) {
+                    toaster.error("Erreur", err);
+                    throw err;
+                });
+        };
+
+        // supprime un errorType
+        this.deleteType = function(type) {
+            swal
+                .confirmDelete({
+                    title: "Supression",
+                    text:
+                        "Êtes vous sûre de vouloir supprimer ce type d'erreur ?",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                })
+                .then(function() {
+                    return errorTypeService.delete(type);
+                })
+                .then(function() {
+                    $scope.errorTypes.splice(
+                        $scope.errorTypes.indexOf(type),
+                        1
+                    );
+                })
+                .catch(function(err) {
+                    if (err !== true) {
+                        toaster.error("Erreur", err);
+                        throw err;
+                    }
+                });
+        };
+    }
+]);
+
+angular.module("rest-client").config([
+    "$stateProvider",
     "$urlRouterProvider",
     "menuProvider",
     function($stateProvider, $urlRouterProvider, menuProvider) {
@@ -102,7 +223,8 @@ angular.module("rest-client").config([
         menuProvider.add({
             stateName: "rest-client.index",
             icon: "home",
-            name: "Accueil"
+            name: "Accueil",
+            importance: 0
         });
     }
 ]);
@@ -111,25 +233,23 @@ angular.module("rest-client").controller("indexController", [function() {}]);
 
 angular.module("rest-client").config([
     "$stateProvider",
-    function($stateProvider) {
-        $stateProvider.state("login", {
-            url: "/login",
-            templateUrl: "./modules/login/login.html"
-        });
-    }
-]);
-
-angular.module("rest-client").config([
-    "$stateProvider",
     "menuProvider",
     function($stateProvider, menuProvider) {
-        console.log("here");
         // enregistrement de l'etat logs
         $stateProvider.state("rest-client.logs", {
             entryName: "Logs",
             url: "/logs",
             templateUrl: "./modules/logs/logs.html",
-            controller: "logsController"
+            controller: "logsController",
+            controllerAs: "ctrl",
+            resolve: {
+                logs: [
+                    "logService",
+                    function(logService) {
+                        return logService.get();
+                    }
+                ]
+            }
         });
 
         // enregistrement de l'entrée mennue Logs
@@ -143,61 +263,146 @@ angular.module("rest-client").config([
 
 angular.module("rest-client").controller("logsController", [
     "$scope",
-    "$http",
-    function($scope, $http) {
-        $scope.config = {};
+    "logs",
+    "logService",
+    function($scope, logs, logService) {
+        const me = this;
+        $scope.logs = logs;
+        this.defaultLimitSize = 50;
+        this.limitSize = this.defaultLimitSize;
 
-        var requestHandler = function(res) {
-            $scope.data = res.data;
-            $scope.headers = res.headers;
-            $scope.raw = res;
+        // fournis les logs selon la limite courante
+        this.refreshLogs = function() {
+            logService
+                .get(null, {
+                    limit: me.limitSize
+                })
+                .then(function(res) {
+                    $scope.logs = res;
+                })
+                .catch(function(err) {
+                    throw err;
+                });
         };
 
-        $scope.formName = "customerForm";
-        $scope.params = {
-            limit: 25,
-            start: 0
+        // ajoute plus d'éléments et rafraichis
+        this.getMoreLogs = function() {
+            me.limitSize += me.defaultLimitSize;
+            me.refreshLogs();
         };
-        $scope.formStructure = [
-            {
-                title: "Parametres généraux",
-                type: "separator"
-            },
-            {
-                allowBlank: true,
-                label: "Limite",
-                name: "limit",
-                type: "number"
-            },
-            {
-                allowBlank: true,
-                label: "Début",
-                name: "start",
-                type: "number"
-            },
-            {
-                title: "Parametres D'api",
-                type: "separator"
-            },
-            {
-                allowBlank: true,
-                label: "Début",
-                name: "app",
-                type: "choice",
-                items: ["info", "error", "debug", "warning"]
+    }
+]);
+
+angular.module("rest-client").config([
+    "$stateProvider",
+    "$urlRouterProvider",
+    "menuProvider",
+    function($stateProvider, $urlRouterProvider, menuProvider) {
+        $stateProvider.state("rest-client.reports", {
+            entryName: "Incidents",
+            url: "/reports",
+            controller: "reportsController",
+            controllerAs: "ctrl",
+            templateUrl: "./modules/reports/index.html",
+            resolve: {
+                reports: [
+                    "reportService",
+                    function(reportService) {
+                        return reportService.get(null, {
+                            limit: 0
+                        });
+                    }
+                ]
             }
-        ];
+        });
 
-        $scope.getLogs = function(params) {
-            console.log(params);
-            $http({
-                method: "GET",
-                params: params,
-                url: "http://redway.nrco.fr:1880/qual/nrcom/logs"
-            })
-                .then(requestHandler)
-                .catch(requestHandler);
+        menuProvider.add({
+            stateName: "rest-client.reports",
+            icon: "exclamation-triangle",
+            name: "Incidents"
+        });
+    }
+]);
+
+angular.module("rest-client").controller("reportsController", [
+    "$scope",
+    "reports",
+    "reportService",
+    function($scope, reports, reportService) {
+        $scope.reports = reports;
+        this.refreshReports = function() {
+            reportService
+                .get(null, {
+                    limit: 0
+                })
+                .then(function(res) {
+                    $scope.reports = res;
+                })
+                .catch(function(err) {
+                    throw err;
+                });
         };
+    }
+]);
+
+angular.module("rest-client").config([
+    "$stateProvider",
+    "$urlRouterProvider",
+    "menuProvider",
+    function($stateProvider, $urlRouterProvider, menuProvider) {
+        $stateProvider.state("rest-client.reports.report", {
+            entryName: [
+                "report",
+                function(report) {
+                    return "Rapport " + report._id;
+                }
+            ],
+            url: "/:id",
+            controller: "reportController",
+            controllerAs: "ctrl",
+            templateUrl: "./modules/reports/report/index.html",
+            resolve: {
+                report: [
+                    "reportService",
+                    "$stateParams",
+                    function(reportService, $stateParams) {
+                        console.log($stateParams);
+                        return reportService.getById({ _id: $stateParams.id });
+                    }
+                ],
+                logs: [
+                    "logService",
+                    "report",
+                    function(logService, report) {
+                        const reportDate = new Date(report.date);
+                        return logService.get(null, {
+                            filter: JSON.stringify({
+                                date: {
+                                    $lt: new Date(
+                                        reportDate.getTime() + 1000 * 60
+                                    ),
+                                    $gt: new Date(
+                                        reportDate.getTime() - 1000 * 60
+                                    )
+                                }
+                            })
+                        });
+                    }
+                ]
+            }
+        });
+    }
+]);
+
+angular.module("rest-client").controller("reportController", [
+    "$scope",
+    "report",
+    "logs",
+    "logService",
+    "reportService",
+    function($scope, report, logs, logService, reportService) {
+        $scope.logs = logs;
+        $scope.report = report;
     }
 ]);
 
@@ -243,5 +448,26 @@ angular.module("rest-client").controller("restController", [
                 .then(requestHandler)
                 .catch(requestHandler);
         };
+    }
+]);
+
+angular.module("rest-client").service("errorTypeService", [
+    "appResourceProxy",
+    function(resource) {
+        return resource("/error-types");
+    }
+]);
+
+angular.module("rest-client").service("logService", [
+    "appResourceProxy",
+    function(resource) {
+        return resource("/log");
+    }
+]);
+
+angular.module("rest-client").service("reportService", [
+    "appResourceProxy",
+    function(resource) {
+        return resource("/error");
     }
 ]);
