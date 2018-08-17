@@ -30,7 +30,9 @@ var keycloakJson = {
 // config with qual keycloak
 var hostname = window.location.hostname,
     protocol = window.location.protocol;
-if (/localhost/.test(hostname) || /plv2\-qual\.nr(?:co|)\.fr/.test(hostname)) {
+if (/localhost/.test(hostname)) {
+    keycloakJson.url = "https://auth-qual.nrco.fr/auth";
+} else if (/plv2\-qual\.nr(?:co|)\.fr/.test(hostname)) {
     keycloakJson.url = protocol + "//auth-qual.nrco.fr/auth";
 } else if (/plv2\.nr(?:co|)\.fr/.test(hostname)) {
     keycloakJson.url = protocol + "//auth.nrco.fr/auth";
