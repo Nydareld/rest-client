@@ -73,12 +73,18 @@ angular.module('rest-client').run(['$templateCache', function($templateCache) {
     "            <table class=\"table\">\n" +
     "                <tr>\n" +
     "                    <th>Name</th>\n" +
+    "                    <th>Déclenchement de l'erreur</th>\n" +
     "                    <th>Message</th>\n" +
     "                </tr>\n" +
     "                <tr>\n" +
     "                    <td>\n" +
     "                        <div class=\"input-group\">\n" +
     "                            <input type=\"text\" class=\"form-control\" placeholder=\"Nom erreur\" ng-model=\"errorType.name\">\n" +
+    "                        </div>\n" +
+    "                    </td>\n" +
+    "                    <td>\n" +
+    "                        <div class=\"input-group\">\n" +
+    "                            <input type=\"checkbox\" class=\"form-control\" placeholder=\"Signaler l'erreur\" ng-model=\"errorType.throwError\">\n" +
     "                        </div>\n" +
     "                    </td>\n" +
     "                    <td>\n" +
@@ -95,6 +101,11 @@ angular.module('rest-client').run(['$templateCache', function($templateCache) {
     "                    <td>\n" +
     "                        <div class=\"input-group\">\n" +
     "                            <input type=\"text\" class=\"form-control\" placeholder=\"Nom erreur\" ng-model=\"err.name\">\n" +
+    "                        </div>\n" +
+    "                    </td>\n" +
+    "                    <td>\n" +
+    "                        <div class=\"input-group\">\n" +
+    "                            <input type=\"checkbox\" class=\"form-control\" placeholder=\"Signaler l'erreur\" ng-model=\"err.throwError\">\n" +
     "                        </div>\n" +
     "                    </td>\n" +
     "                    <td>\n" +
