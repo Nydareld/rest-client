@@ -153,7 +153,10 @@ angular.module("rest-client").controller("errorTypesController", [
     "swal",
     "toaster",
     function($scope, errorTypes, errorTypeService, swal, toaster) {
-        $scope.errorType = {}; // élément contenant un nouveau type d'erreur
+        $scope.errorType = {
+            // élément contenant un nouveau type d'erreur
+            throwError: true
+        };
         $scope.errorTypes = errorTypes; // liste des types d'erreurs
 
         // ajoute ou modifie une errorType
