@@ -189,6 +189,7 @@ angular.module('rest-client').run(['$templateCache', function($templateCache) {
     "                        <td>\n" +
     "                            <span ng-if=\"report.request\">Rest</span>\n" +
     "                            <span ng-if=\"!report.request\">Client</span>\n" +
+    "                            <span ng-show=\"report.type\">{{report.type}}</span>\n" +
     "                        </td>\n" +
     "                        <td>\n" +
     "                            {{report.comment|stripHtml}}\n" +
@@ -226,6 +227,9 @@ angular.module('rest-client').run(['$templateCache', function($templateCache) {
     "                        <div class=\"col-md-6\">{{report.software.version}}</div>\n" +
     "                        <div class=\"col-md-6\">Commentaire</div>\n" +
     "                        <div class=\"col-md-6\">{{report.comment|stripHtml}}</div>\n" +
+    "                    </div>\n" +
+    "                    <div ng-if=\"report.image\">\n" +
+    "                        <img class=\"img img-responsive\" ng-src=\"{{report.image}}\" />\n" +
     "                    </div>\n" +
     "                </div>\n" +
     "                <div class=\"col-md-6\">\n" +
