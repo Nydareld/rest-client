@@ -22,6 +22,9 @@
                         <div class="col-md-6">Commentaire</div>
                         <div class="col-md-6">{{report.comment|stripHtml}}</div>
                     </div>
+                    <div ng-if="report.image">
+                        <img class="img img-responsive" ng-src="{{report.image}}" />
+                    </div>
                 </div>
                 <div class="col-md-6">
                     <table class="table">
