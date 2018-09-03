@@ -19,6 +19,7 @@
                         <td>
                             <span ng-if="report.request">Rest</span>
                             <span ng-if="!report.request">Client</span>
+                            <span ng-show="report.type">{{report.type}}</span>
                         </td>
                         <td>
                             {{report.comment|stripHtml}}
