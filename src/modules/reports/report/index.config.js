@@ -29,13 +29,14 @@ angular.module("rest-client").config([
                     function(logService, report) {
                         const reportDate = new Date(report.date);
                         return logService.get(null, {
+                            limit: 1000,
                             filter: JSON.stringify({
-                                date: {
-                                    $lt: new Date(
-                                        reportDate.getTime() + 1000 * 60
-                                    ),
-                                    $gt: new Date(
+                                "data.date": {
+                                    $gte: new Date(
                                         reportDate.getTime() - 1000 * 60
+                                    ),
+                                    $lte: new Date(
+                                        reportDate.getTime() + 1000 * 60
                                     )
                                 }
                             })
